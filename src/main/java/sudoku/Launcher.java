@@ -5,7 +5,7 @@ import main.java.sudoku.components.Puzzle;
 public class Launcher {
 
 	public static void main(String[] args) {
-		Frame frame = new Frame(new Puzzle("src/test2.txt"));
+		Frame frame = new Frame(new Puzzle("src/1star.txt"));
 		frame.main_loop();
 	}
 

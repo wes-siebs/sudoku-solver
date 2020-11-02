@@ -1,15 +1,34 @@
 package main.java.sudoku.components;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Move {
 	
-	public Cell cell;
-	public int oldValue;
-	public int newValue;
+	private List<Change> changeList;
 	
-	public Move(Cell cell, int oldValue, int newValue) {
-		this.cell = cell;
-		this.oldValue = oldValue;
-		this.newValue = newValue;
+	public Move() {
+		this.changeList = new ArrayList<Change>();
+	}
+	
+	public void addChange(Change change) {
+		this.changeList.add(change);
+	}
+	
+	public boolean isEmpty() {
+		return this.changeList.isEmpty();
+	}
+	
+	public void apply() {
+		for (Change change : this.changeList) {
+			change.apply();
+		}
+	}
+	
+	public void unapply() {
+		for (Change change : this.changeList) {
+			change.unapply();
+		}
 	}
 
 }

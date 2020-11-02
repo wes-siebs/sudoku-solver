@@ -2,26 +2,29 @@ package main.java.sudoku.solvers;
 
 import main.java.sudoku.components.Board;
 import main.java.sudoku.components.Cell;
+import main.java.sudoku.components.FillChange;
 import main.java.sudoku.components.Move;
+import main.java.sudoku.components.NoteChange;
 
 public class OpenSingleSolver extends Solver {
 
 	@Override
 	public Move getNextMove(Board board) {
-		Move nextMove = checkSections(board.rows);
+		Move nextMove = new Move();
+		checkSections(board, board.rows, nextMove);
 		
-		if (nextMove == null) {
-			nextMove = checkSections(board.columns);
+		if (nextMove.isEmpty()) {
+			checkSections(board, board.columns, nextMove);
 			
-			if (nextMove == null) {
-				nextMove = checkSections(board.boxes);
+			if (nextMove.isEmpty()) {
+				checkSections(board, board.boxes, nextMove);
 			}
 		}
 		
 		return nextMove;
 	}
 	
-	private Move checkSections(Cell[][] cellSections) {
+	private void checkSections(Board board, Cell[][] cellSections, Move move) {
 		for (Cell[] section : cellSections) {
 			int zeroCount = 0;
 			for (Cell cell : section) {
@@ -41,13 +44,22 @@ public class OpenSingleSolver extends Solver {
 				}
 				for (int i = 1; i < valueTaken.length; i++) {
 					if (!valueTaken[i]) {
-						return new Move(moveCell, moveCell.value, i);
+						move.addChange(new FillChange(moveCell, i));
+						for (int j = 1; j <= 9; j++) {
+							move.addChange(new NoteChange(moveCell, j));
+						}
+						for (int j = 0; j < 9; j++) {
+							move.addChange(new NoteChange(board.rows[moveCell.row][j], i));
+							move.addChange(new NoteChange(board.columns[moveCell.column][j], i));
+							move.addChange(new NoteChange(board.boxes[moveCell.box][j], i));
+						}
+						return;
 					}
 				}
 			}
 		}
 		
-		return null;
+		return;
 	}
 
 	@Override

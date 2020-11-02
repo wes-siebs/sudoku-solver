@@ -47,8 +47,8 @@ public class Puzzle {
 			for (Solver solver : SolverList.solverList) {
 				Move nextMove = solver.getNextMove(this.board);
 				
-				if (nextMove != null) {
-					this.board.applyMove(nextMove);
+				if (!nextMove.isEmpty()) {
+					nextMove.apply();
 					
 					this.undoMoves.push(nextMove);
 					this.difficulty = Math.max(this.difficulty, solver.getDifficulty());
@@ -77,7 +77,7 @@ public class Puzzle {
 	public void undo() {
 		if (this.canUndo()) {
 			Move move = this.undoMoves.pop();
-			board.unapplyMove(move);
+			move.unapply();
 			this.redoMoves.push(move);
 		}
 	}
@@ -89,7 +89,7 @@ public class Puzzle {
 	public void redo() {
 		if (this.canRedo()) {
 			Move move = this.redoMoves.pop();
-			board.applyMove(move);
+			move.apply();
 			this.undoMoves.push(move);
 		}
 	}

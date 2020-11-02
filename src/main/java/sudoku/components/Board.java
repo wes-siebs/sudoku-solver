@@ -55,27 +55,5 @@ public class Board {
 	public int getBoxPos(int row, int column) {
 		return (row % this.unit) * this.unit + (column % this.unit);
 	}
-	
-	public void applyMove(Move move) {
-		this.rows[move.cell.row][move.cell.column].value = move.newValue;
-		
-		for (Cell cell : this.rows[move.cell.row]) {
-			cell.possibilities[move.newValue] = false;
-		}
-		
-		for (Cell cell : this.columns[move.cell.column]) {
-			cell.possibilities[move.newValue] = false;
-		}
-		
-		for (Cell cell : this.boxes[move.cell.box]) {
-			cell.possibilities[move.newValue] = false;
-		}
-	}
-	
-	public void unapplyMove(Move move) {
-		this.rows[move.cell.row][move.cell.column].value = move.oldValue;
-		
-		// TODO: unapply notations?
-	}
 
 }

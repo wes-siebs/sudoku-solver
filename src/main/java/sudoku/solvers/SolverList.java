@@ -4,7 +4,8 @@ public class SolverList {
 	
 	public static final Solver[] solverList = {
 		new OpenSingleSolver(),
-		new NakedSingleSolver()
+		new NakedSingleSolver(),
+		new HiddenSingleSolver()
 	};
 
 }
