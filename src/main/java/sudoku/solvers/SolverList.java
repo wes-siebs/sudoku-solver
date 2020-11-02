@@ -1,0 +1,9 @@
+package main.java.sudoku.solvers;
+
+public class SolverList {
+	
+	public static final Solver[] solverList = {
+		new OpenSingleSolver()
+	};
+
+}
