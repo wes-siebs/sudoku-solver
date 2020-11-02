@@ -2,10 +2,10 @@ package main.java.sudoku.components;
 
 public class Board {
 	
-	private int unit;
-	public Cell[][] rows;
-	public Cell[][] columns;
-	public Cell[][] boxes;
+	private final int unit;
+	public final Cell[][] rows;
+	public final Cell[][] columns;
+	public final Cell[][] boxes;
 	
 	public Board(int[][] values) {
 		this.unit = (int) Math.sqrt(values.length);
@@ -16,10 +16,34 @@ public class Board {
 
 		for (int i = 0; i < values.length; i++) {
 			for (int j = 0; j < values.length; j++) {
-				Cell cell = new Cell(values[i][j], i, j);
+				Cell cell = new Cell(values[i][j], i, j, this.getBox(i, j));
 				this.rows[i][j] = cell;
 				this.columns[j][i] = cell;
-				this.boxes[this.getBox(i, j)][this.getBoxPos(i, j)] = cell;
+				this.boxes[cell.box][this.getBoxPos(i, j)] = cell;
+			}
+		}
+		
+		for (Cell[] row : this.rows) {
+			for (Cell checkedCell : row) {
+				for (Cell changedCell : row) {
+					changedCell.possibilities[checkedCell.value] = false;
+				}
+			}
+		}
+		
+		for (Cell[] column : this.columns) {
+			for (Cell checkedCell : column) {
+				for (Cell changedCell : column) {
+					changedCell.possibilities[checkedCell.value] = false;
+				}
+			}
+		}
+		
+		for (Cell[] box : this.boxes) {
+			for (Cell checkedCell : box) {
+				for (Cell changedCell : box) {
+					changedCell.possibilities[checkedCell.value] = false;
+				}
 			}
 		}
 	}
@@ -34,10 +58,24 @@ public class Board {
 	
 	public void applyMove(Move move) {
 		this.rows[move.cell.row][move.cell.column].value = move.newValue;
+		
+		for (Cell cell : this.rows[move.cell.row]) {
+			cell.possibilities[move.newValue] = false;
+		}
+		
+		for (Cell cell : this.columns[move.cell.column]) {
+			cell.possibilities[move.newValue] = false;
+		}
+		
+		for (Cell cell : this.boxes[move.cell.box]) {
+			cell.possibilities[move.newValue] = false;
+		}
 	}
 	
 	public void unapplyMove(Move move) {
 		this.rows[move.cell.row][move.cell.column].value = move.oldValue;
+		
+		// TODO: unapply notations?
 	}
 
 }

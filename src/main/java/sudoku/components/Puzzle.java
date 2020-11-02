@@ -48,7 +48,7 @@ public class Puzzle {
 				Move nextMove = solver.getNextMove(this.board);
 				
 				if (nextMove != null) {
-					nextMove.cell.value = nextMove.newValue;
+					this.board.applyMove(nextMove);
 					
 					this.undoMoves.push(nextMove);
 					this.difficulty = Math.max(this.difficulty, solver.getDifficulty());

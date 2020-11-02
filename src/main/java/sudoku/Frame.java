@@ -53,6 +53,18 @@ public class Frame implements KeyListener{
 			this.g.setColor(Color.WHITE);
 			this.g.fillRect(0, 0, SIZE, SIZE);
 			
+			Cell[][] cells = this.puzzle.getBoard().rows;
+			this.g.setColor(Color.LIGHT_GRAY);
+			for (int i = 0; i < 9; i++ ) {
+				for (int j = 0; j < 9; j++) {
+					for (int ii = 0; ii < 9; ii++) {
+						if (cells[i][j].possibilities[ii + 1]) {
+							this.g.fillRect(20 + boxPos[j] + (ii % 3) * (SIZE - 40) / 27, 20 + boxPos[i] + (ii / 3) * (SIZE - 40) / 27, (SIZE - 40) / 27, (SIZE - 40) / 27);
+						}
+					}
+				}
+			}
+			
 			this.g.setColor(Color.BLACK);
 			this.g.setStroke(new BasicStroke(2));
 			this.g.drawRect(20, 20, SIZE - 40, SIZE - 40);
@@ -66,7 +78,6 @@ public class Frame implements KeyListener{
 				this.g.drawLine(20 + boxPos[i], 20, 20 + boxPos[i], SIZE - 20);
 			}
 			
-			Cell[][] cells = this.puzzle.getBoard().rows;
 			for (Cell[] row : cells) {
 				for (Cell cell : row) {
 					if (cell.value > 0) {
