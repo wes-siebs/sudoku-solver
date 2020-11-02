@@ -2,16 +2,14 @@ package main.java.sudoku.solvers;
 
 import main.java.sudoku.components.Board;
 import main.java.sudoku.components.Cell;
-import main.java.sudoku.components.FillChange;
 import main.java.sudoku.components.Move;
-import main.java.sudoku.components.NoteChange;
 
 public class NakedSingleSolver extends Solver {
 
 	@Override
 	public Move getNextMove(Board board) {
 		Move nextMove = new Move();
-		
+
 		for (Cell[] row : board.rows) {
 			for (Cell cell : row) {
 				int count = 0;
@@ -28,15 +26,7 @@ public class NakedSingleSolver extends Solver {
 					}
 				}
 				if (count == 1) {
-					nextMove.addChange(new FillChange(cell, newValue));
-					for (int i = 1; i <= 9; i++) {
-						nextMove.addChange(new NoteChange(cell, i));
-					}
-					for (int i = 0; i < 9; i++) {
-						nextMove.addChange(new NoteChange(board.rows[cell.row][i], newValue));
-						nextMove.addChange(new NoteChange(board.columns[cell.column][i], newValue));
-						nextMove.addChange(new NoteChange(board.boxes[cell.box][i], newValue));
-					}
+					this.addChanges(board, cell, newValue, nextMove);
 					return nextMove;
 				}
 			}
