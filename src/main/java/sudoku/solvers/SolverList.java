@@ -7,7 +7,8 @@ public class SolverList {
 			new NakedSingleSolver(),
 			new HiddenSingleSolver(),
 			new NakedPairSolver(),
-			new NakedTripleSolver()
+			new NakedTripleSolver(),
+			new NakedQuadSolver()
 	};
 
 }
