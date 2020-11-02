@@ -1,16 +1,21 @@
 package main.java.sudoku.solvers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import main.java.sudoku.components.Board;
 import main.java.sudoku.components.Cell;
 import main.java.sudoku.components.Move;
 import main.java.sudoku.components.NoteChange;
 
-public class NakedPairSolver extends Solver {
+public class NakedTripleSolver extends Solver {
 
 	@Override
 	public Move getNextMove(Board board) {
 		Move nextMove = new Move();
-
+		
+		
+		
 		for (int i = 0; i < 9; i++) {
 			checkHouse(board.rows[i], nextMove);
 			if (nextMove.isEmpty()) {
@@ -27,10 +32,10 @@ public class NakedPairSolver extends Solver {
 				break;
 			}
 		}
-
+		
 		return nextMove;
 	}
-
+	
 	private void checkHouse(Cell[] house, Move move) {
 		for (int i = 0; i < house.length; i++) {
 			if (house[i].value != 0) {
@@ -40,46 +45,44 @@ public class NakedPairSolver extends Solver {
 				if (house[j].value != 0) {
 					continue;
 				}
-				int noteCount = 0;
-				int[] notes = new int[2];
-				int k = 1;
-				for (; k <= house.length; k++) {
-					if (house[i].possibilities[k] == house[j].possibilities[k]) {
-						if (house[i].possibilities[k]) {
-							if (noteCount < 2) {
-								notes[noteCount] = k;
-								noteCount++;
-							} else {
-								break;
-							}
-						}
-					} else {
-						break;
-					}
-				}
-				if (k == house.length + 1 && noteCount == 2) {
-					for (Cell cell : house) {
-						if (cell != house[i] && cell != house[j]) {
-							if (cell.possibilities[notes[0]]) {
-								move.addChange(new NoteChange(cell, notes[0]));
-							}
-							if (cell.possibilities[notes[1]]) {
-								move.addChange(new NoteChange(cell, notes[1]));
-							}
-						}
+				for (int k = j + 1; k < house.length; k++) {
+					if (house[k].value != 0) {
+						continue;
 					}
 					
-					if (!move.isEmpty()) {
-						return;
+					List<Integer> notes = overlap(house[i], house[j], house[k]);
+					if (notes.size() == 3) {
+						for (Cell cell : house) {
+							if (cell != house[i] && cell != house[j] && cell != house[k]) {
+								for (Integer note : notes)
+								if (cell.possibilities[note]) {
+									move.addChange(new NoteChange(cell, note));
+								}
+							}
+						}
+						
+						if (!move.isEmpty()) {
+							return;
+						}
 					}
 				}
 			}
 		}
 	}
+	
+	private List<Integer> overlap(Cell c1, Cell c2, Cell c3) {
+		List<Integer> notes = new ArrayList<>();
+		for (int i = 1; i < c1.possibilities.length; i++) {
+			if (c1.possibilities[i] || c2.possibilities[i] || c3.possibilities[i]) {
+				notes.add(i);
+			}
+		}
+		return notes;
+	}
 
 	@Override
 	public int getDifficulty() {
-		return 2;
+		return 3;
 	}
 
 }
