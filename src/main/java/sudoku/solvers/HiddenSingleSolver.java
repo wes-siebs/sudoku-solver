@@ -5,6 +5,11 @@ import main.java.sudoku.components.Cell;
 import main.java.sudoku.components.Move;
 
 public class HiddenSingleSolver extends Solver {
+	
+	@Override
+	public String getName() {
+		return "Hidden Single";
+	}
 
 	@Override
 	public Move getNextMove(Board board) {

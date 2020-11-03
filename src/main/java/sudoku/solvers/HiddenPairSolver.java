@@ -4,6 +4,11 @@ import main.java.sudoku.components.Board;
 import main.java.sudoku.components.Move;
 
 public class HiddenPairSolver extends HiddenTupleSolver {
+	
+	@Override
+	public String getName() {
+		return "Hidden Pair";
+	}
 
 	@Override
 	public Move getNextMove(Board board) {

@@ -12,7 +12,9 @@ public class SolverList {
 			new HiddenPairSolver(),
 			new HiddenTripleSolver(),
 			new HiddenQuadSolver(),
-			new XWingSolver()
+			new XWingSolver(),
+			new SwordfishSolver(),
+			new JellyfishSolver()
 	};
 
 }

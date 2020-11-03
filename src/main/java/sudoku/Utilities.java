@@ -24,6 +24,9 @@ public class Utilities {
 	}
 	
 	private static int factorial(int n) {
+		if (n < 0) {
+			throw new IllegalArgumentException("cannot return factorial of negative number: " + n);
+		}
 		if (n == 0) {
 			return 1;
 		} else {

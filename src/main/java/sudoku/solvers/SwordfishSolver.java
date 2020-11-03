@@ -3,11 +3,11 @@ package main.java.sudoku.solvers;
 import main.java.sudoku.components.Board;
 import main.java.sudoku.components.Move;
 
-public class HiddenTripleSolver extends HiddenTupleSolver {
+public class SwordfishSolver extends FishSolver {
 	
 	@Override
 	public String getName() {
-		return "Hidden Triple";
+		return "Swordfish";
 	}
 
 	@Override
@@ -17,7 +17,7 @@ public class HiddenTripleSolver extends HiddenTupleSolver {
 
 	@Override
 	public int getDifficulty() {
-		return 4;
+		return 5;
 	}
 
 }

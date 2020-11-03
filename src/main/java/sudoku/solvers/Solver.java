@@ -7,6 +7,8 @@ import main.java.sudoku.components.Move;
 import main.java.sudoku.components.NoteChange;
 
 public abstract class Solver {
+	
+	public abstract String getName();
 
 	public abstract Move getNextMove(Board board);
 

@@ -5,6 +5,11 @@ import main.java.sudoku.components.Cell;
 import main.java.sudoku.components.Move;
 
 public class NakedSingleSolver extends Solver {
+	
+	@Override
+	public String getName() {
+		return "Naked Single";
+	}
 
 	@Override
 	public Move getNextMove(Board board) {

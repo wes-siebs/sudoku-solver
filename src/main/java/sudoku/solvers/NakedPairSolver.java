@@ -4,6 +4,11 @@ import main.java.sudoku.components.Board;
 import main.java.sudoku.components.Move;
 
 public class NakedPairSolver extends NakedTupleSolver {
+	
+	@Override
+	public String getName() {
+		return "Naked Pair";
+	}
 
 	@Override
 	public Move getNextMove(Board board) {

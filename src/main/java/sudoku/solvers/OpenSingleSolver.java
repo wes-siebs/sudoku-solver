@@ -5,6 +5,11 @@ import main.java.sudoku.components.Cell;
 import main.java.sudoku.components.Move;
 
 public class OpenSingleSolver extends Solver {
+	
+	@Override
+	public String getName() {
+		return "Open Single";
+	}
 
 	@Override
 	public Move getNextMove(Board board) {

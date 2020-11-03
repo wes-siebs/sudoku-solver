@@ -49,6 +49,7 @@ public class Puzzle {
 				Move nextMove = solver.getNextMove(this.board);
 				
 				if (!nextMove.isEmpty()) {
+					System.out.println(solver.getName());
 					nextMove.apply();
 					
 					this.undoMoves.push(nextMove);
