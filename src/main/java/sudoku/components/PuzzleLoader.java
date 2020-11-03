@@ -9,36 +9,43 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class PuzzleLoader {
-	
+
 	public static int[][] loadPuzzle(String filename) {
 		InputStream inputStream = null;
-		
+
 		try {
 			File file = new File(filename);
 			inputStream = new FileInputStream(file);
-			
+
 			BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-			
+
 			String line = reader.readLine();
-			
+
 			if (line == null) {
 				System.err.println("File cannot be empty: " + filename);
 				reader.close();
 				return null;
 			}
-			
+
 			int unit = Integer.parseInt(line);
 			int size = unit * unit;
 			int[][] values = new int[size][size];
-			
+
 			for (int i = 0; i < size; i++) {
 				String[] row = reader.readLine().split(" ");
-				
-				for (int j = 0; j < size; j++) {
-					values[i][j] = Integer.parseInt(row[j]);
+
+				if (row.length == 1) {
+					for (int j = 0; j < size; j++) {
+						values[i][j] = Integer.parseInt("" + row[0].charAt(j));
+					}
+				} else {
+					for (int j = 0; j < size; j++) {
+						values[i][j] = Integer.parseInt(row[j]);
+					}
 				}
+
 			}
-			
+
 			reader.close();
 			return values;
 		} catch (NullPointerException exception) {
@@ -49,7 +56,7 @@ public class PuzzleLoader {
 			System.err.println("Error reading file: " + filename);
 			e.printStackTrace();
 		}
-		
+
 		return null;
 	}
 
