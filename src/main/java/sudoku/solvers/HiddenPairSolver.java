@@ -3,16 +3,20 @@ package main.java.sudoku.solvers;
 import main.java.sudoku.components.Board;
 import main.java.sudoku.components.Move;
 
-public class NakedQuadSolver extends NakedTupleSolver {
+public class HiddenPairSolver extends Solver {
 
 	@Override
 	public Move getNextMove(Board board) {
-		return super.getNextMove(board, 4);
+		Move nextMove = new Move();
+		
+		//for ()
+		
+		return nextMove;
 	}
 
 	@Override
 	public int getDifficulty() {
-		return 3;
+		return 4;
 	}
 
 }
