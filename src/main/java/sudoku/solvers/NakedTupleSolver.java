@@ -59,9 +59,7 @@ public abstract class NakedTupleSolver extends Solver {
 				}
 				if (!skip) {
 					for (Integer note : notes) {
-						if (house[i].possibilities[note]) {
-							move.addChange(new NoteChange(house[i], note));
-						}
+						move.addChange(new NoteChange(house[i], note));
 					}
 				}
 			}

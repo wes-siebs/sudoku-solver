@@ -60,7 +60,7 @@ public abstract class HiddenTupleSolver extends Solver {
 		if (valid && cells.size() == tuple.length) {
 			for (int value : tuple) {
 				for (Cell cell : house) {
-					if ((!cells.contains(cell)) && cell.possibilities[value]) {
+					if (!cells.contains(cell)) {
 						move.addChange(new NoteChange(cell, value));
 					}
 				}
@@ -76,9 +76,7 @@ public abstract class HiddenTupleSolver extends Solver {
 				}
 				if (change) {
 					for (Cell cell : cells) {
-						if (cell.possibilities[i]) {
-							move.addChange(new NoteChange(cell, i));
-						}
+						move.addChange(new NoteChange(cell, i));
 					}
 				}
 			}

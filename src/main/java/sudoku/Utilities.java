@@ -2,6 +2,14 @@ package main.java.sudoku;
 
 public class Utilities {
 	
+	public static int unfold(int n) {
+		if (n == 1) {
+			return 0;
+		} else {
+			return 1 + unfold(n >> 1);
+		}
+	}
+	
 	public static int[][] nCkTuples(int n, int k, int index) {
 		int size = factorial(n) / factorial(n - k) / factorial(k);
 		
@@ -26,8 +34,7 @@ public class Utilities {
 	private static int factorial(int n) {
 		if (n < 0) {
 			throw new IllegalArgumentException("cannot return factorial of negative number: " + n);
-		}
-		if (n == 0) {
+		} else if (n == 0) {
 			return 1;
 		} else {
 			return n * factorial(n - 1);

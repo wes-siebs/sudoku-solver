@@ -14,7 +14,8 @@ public class SolverList {
 			new HiddenQuadSolver(),
 			new XWingSolver(),
 			new SwordfishSolver(),
-			new JellyfishSolver()
+			new XYWingSolver(),
+			new JellyfishSolver(),
 	};
 
 }
