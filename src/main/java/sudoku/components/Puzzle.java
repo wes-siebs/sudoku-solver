@@ -3,21 +3,22 @@ package main.java.sudoku.components;
 import java.util.Stack;
 
 import main.java.sudoku.solvers.Solver;
-import main.java.sudoku.solvers.SolverList;
 
 public class Puzzle {
 
 	private Board board;
+	private Solver[] solvers;
 	private Stack<Move> undoMoves;
 	private Stack<Move> redoMoves;
 	private int difficulty;
 	
-	public Puzzle(String filename) {
-		this(PuzzleLoader.loadPuzzle(filename));
+	public Puzzle(String filename, Solver[] solvers) {
+		this(PuzzleLoader.loadPuzzle(filename), solvers);
 	}
 
-	public Puzzle(int[][] values) {
+	public Puzzle(int[][] values, Solver[] solvers) {
 		this.board = new Board(values);
+		this.solvers = solvers;
 
 		this.undoMoves = new Stack<Move>();
 		this.redoMoves = new Stack<Move>();
@@ -44,7 +45,7 @@ public class Puzzle {
 		while (!this.isSolved()) {
 			boolean madeMove = false;
 			
-			for (Solver solver : SolverList.solverList) {
+			for (Solver solver : this.solvers) {
 				Move nextMove = solver.getNextMove(this.board);
 				
 				if (!nextMove.isEmpty()) {

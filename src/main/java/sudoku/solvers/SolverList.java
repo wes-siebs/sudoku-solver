@@ -11,7 +11,8 @@ public class SolverList {
 			new NakedQuadSolver(),
 			new HiddenPairSolver(),
 			new HiddenTripleSolver(),
-			new HiddenQuadSolver()
+			new HiddenQuadSolver(),
+			new XWingSolver()
 	};
 
 }

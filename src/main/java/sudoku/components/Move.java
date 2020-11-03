@@ -12,7 +12,9 @@ public class Move {
 	}
 	
 	public void addChange(Change change) {
-		this.changeList.add(change);
+		if (change.isValid()) {
+			this.changeList.add(change);
+		}
 	}
 	
 	public boolean isEmpty() {

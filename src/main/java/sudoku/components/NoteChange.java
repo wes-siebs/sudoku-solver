@@ -22,4 +22,9 @@ public class NoteChange extends Change {
 		this.cell.possibilities[note] = oldValue;
 	}
 
+	@Override
+	public boolean isValid() {
+		return this.oldValue;
+	}
+
 }

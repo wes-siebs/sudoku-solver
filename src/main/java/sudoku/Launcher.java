@@ -1,11 +1,12 @@
 package main.java.sudoku;
 
 import main.java.sudoku.components.Puzzle;
+import main.java.sudoku.solvers.SolverList;
 
 public class Launcher {
 
 	public static void main(String[] args) {
-		Frame frame = new Frame(new Puzzle("src/5star2.txt"));
+		Frame frame = new Frame(new Puzzle("resources/XWingTest.txt", SolverList.solverList));
 
 		while (true) {
 			frame.draw();
