@@ -3,11 +3,11 @@ package main.java.sudoku.solvers;
 import main.java.sudoku.components.Board;
 import main.java.sudoku.components.Move;
 
-public class HiddenPairSolver extends HiddenTupleSolver {
+public class HiddenQuadSolver extends HiddenTupleSolver {
 
 	@Override
 	public Move getNextMove(Board board) {
-		return super.getNextMove(board, 2);
+		return super.getNextMove(board, 4);
 	}
 
 	@Override
