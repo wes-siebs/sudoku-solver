@@ -18,7 +18,8 @@ public class SolverList {
 			new SwordfishSolver(),
 			new XYWingSolver(),
 			new JellyfishSolver(),
-			new UniqueRectangleSolver()
+			new UniqueRectangleSolver(),
+			new XYZWingSolver()
 	};
 
 }

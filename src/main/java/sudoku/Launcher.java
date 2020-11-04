@@ -6,7 +6,7 @@ import main.java.sudoku.solvers.SolverList;
 public class Launcher {
 
 	public static void main(String[] args) {
-		Frame frame = new Frame(new Puzzle("resources/UniqueRectangleTest2.txt", SolverList.solverList));
+		Frame frame = new Frame(new Puzzle("resources/XYZWingTest.txt", SolverList.solverList));
 
 		while (true) {
 			frame.draw();
