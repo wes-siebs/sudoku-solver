@@ -2,9 +2,9 @@ package main.java.sudoku.components;
 
 public class FillChange extends Change {
 	
-	private Cell cell;
-	private int oldValue;
-	private int newValue;
+	public Cell cell;
+	public int oldValue;
+	public int newValue;
 	
 	public FillChange(Cell cell, int newValue) {
 		this.cell = cell;

@@ -2,9 +2,9 @@ package main.java.sudoku.components;
 
 public class NoteChange extends Change {
 	
-	private Cell cell;
-	private int note;
-	private boolean oldValue;
+	public Cell cell;
+	public int note;
+	public boolean oldValue;
 	
 	public NoteChange(Cell cell, int note) {
 		this.cell = cell;

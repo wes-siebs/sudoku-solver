@@ -11,7 +11,7 @@ public class Puzzle {
 	private Stack<Move> undoMoves;
 	private Stack<Move> redoMoves;
 	private int difficulty;
-	
+
 	public Puzzle(String filename, Solver[] solvers) {
 		this(PuzzleLoader.loadPuzzle(filename), solvers);
 	}
@@ -24,7 +24,7 @@ public class Puzzle {
 		this.redoMoves = new Stack<Move>();
 		this.difficulty = -1;
 	}
-	
+
 	public Board getBoard() {
 		return this.board;
 	}
@@ -37,39 +37,37 @@ public class Puzzle {
 				}
 			}
 		}
-		
+
 		return true;
 	}
-	
+
 	public void solve() {
-		while (!this.isSolved()) {
-			boolean madeMove = false;
-			
-			for (Solver solver : this.solvers) {
-				Move nextMove = solver.getNextMove(this.board);
-				
-				if (!nextMove.isEmpty()) {
-					System.out.println(solver.getName());
-					nextMove.apply();
-					
-					this.undoMoves.push(nextMove);
-					this.difficulty = Math.max(this.difficulty, solver.getDifficulty());
-					
-					madeMove = true;
-					break;
-				}
-			}
-			
-			if (!madeMove) {
-				break;
-			}
+		Move nextMove;
+		while ((nextMove = takeStep()) != null) {
+			nextMove.apply();
+			this.undoMoves.push(nextMove);
 		}
-		
+
 		if (this.isSolved()) {
 			System.out.println("Puzzle was solved.");
+			System.out.println(difficulty + " stars");
 		} else {
 			System.out.println("Puzzle was not solved.");
 		}
+	}
+
+	public Move takeStep() {
+		for (Solver solver : this.solvers) {
+			Move nextMove = solver.getNextMove(this.board);
+
+			if (!nextMove.isEmpty()) {
+				System.out.println(solver.getName());
+				this.difficulty = Math.max(this.difficulty, solver.getDifficulty());
+				return nextMove;
+			}
+		}
+
+		return null;
 	}
 
 	public boolean canUndo() {
