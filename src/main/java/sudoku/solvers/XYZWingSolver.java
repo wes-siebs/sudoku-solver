@@ -28,18 +28,15 @@ public class XYZWingSolver extends Solver {
 			if (pincers.size() < 2) {
 				continue;
 			}
-			System.out.println("Key: " + key.coordString());
 
 			int keyValue = key.getIntNotes();
 			for (int i = 0; i < pincers.size(); i++) {
-				System.out.println("\tPincer: " + pincers.get(i).coordString());
 				int p1Value = pincers.get(i).getIntNotes();
 				for (int j = i + 1; j < pincers.size(); j++) {
 					int p2Value = pincers.get(j).getIntNotes();
 
 					if ((p1Value | p2Value) == keyValue) {
 						int toRemove = Utilities.unfold(p1Value & p2Value);
-						System.out.println(toRemove);
 
 						for (Cell[] row : board.rows) {
 							for (Cell cell : row) {
