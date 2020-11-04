@@ -14,47 +14,24 @@ public class OpenSingleSolver extends Solver {
 	@Override
 	public Move getNextMove(Board board) {
 		Move nextMove = new Move();
-		checkSections(board, board.rows, nextMove);
 
-		if (nextMove.isEmpty()) {
-			checkSections(board, board.columns, nextMove);
-
-			if (nextMove.isEmpty()) {
-				checkSections(board, board.boxes, nextMove);
+		for (Cell[] row : board.rows) {
+			for (Cell cell : row) {
+				if (cell.getNumNotes() == 1) {
+					int note = 0;
+					for (int i = 0; i < cell.possibilities.length; i++) {
+						if (cell.possibilities[i]) {
+							note = i;
+							break;
+						}
+					}
+					this.addChanges(board, cell, note, nextMove);
+					return nextMove;
+				}
 			}
 		}
 
 		return nextMove;
-	}
-
-	private void checkSections(Board board, Cell[][] cellSections, Move move) {
-		for (Cell[] section : cellSections) {
-			int zeroCount = 0;
-			for (Cell cell : section) {
-				if (cell.value == 0) {
-					zeroCount++;
-				}
-			}
-			if (zeroCount == 1) {
-				Cell moveCell = null;
-				boolean[] valueTaken = new boolean[10];
-				for (Cell cell : section) {
-					if (cell.value == 0) {
-						moveCell = cell;
-					} else {
-						valueTaken[cell.value] = true;
-					}
-				}
-				for (int i = 1; i < valueTaken.length; i++) {
-					if (!valueTaken[i]) {
-						this.addChanges(board, moveCell, i, move);
-						return;
-					}
-				}
-			}
-		}
-
-		return;
 	}
 
 	@Override

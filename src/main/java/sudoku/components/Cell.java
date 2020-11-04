@@ -29,6 +29,14 @@ public class Cell {
 	public String coordString() {
 		return "(" + this.row + "," + this.column + ")";
 	}
+	
+	public int getNumNotes() {
+		int count = 0;
+		for (boolean note : this.possibilities) {
+			count += note ? 1 : 0;
+		}
+		return count;
+	}
 
 	public int getIntNotes() {
 		int value = 0;

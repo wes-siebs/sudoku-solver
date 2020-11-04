@@ -23,11 +23,7 @@ public class XYWingSolver extends Solver {
 		List<Cell> candidates = new ArrayList<Cell>();
 		for (Cell[] row : board.rows) {
 			for (Cell cell : row) {
-				int count = 0;
-				for (boolean b : cell.possibilities) {
-					count += b ? 1 : 0;
-				}
-				if (count == 2) {
+				if (cell.getNumNotes() == 2) {
 					candidates.add(cell);
 				}
 			}
