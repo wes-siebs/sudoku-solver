@@ -1,7 +1,6 @@
 package test.java.sudoku;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
@@ -22,7 +21,7 @@ public class XYZWingSolverTest extends SolverTest {
 		int[] columns = { 0 };
 		int[] notes = { 3 };
 		for (int i = 0; i < rows.length; i++) {
-			assertTrue(this.checkNoteChange(move.changeList.get(i), rows[i], columns[i], notes[i]));
+			this.checkNoteChange(move.changeList.get(i), rows[i], columns[i], notes[i]);
 		}
 	}
 

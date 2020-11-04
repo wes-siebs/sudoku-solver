@@ -40,8 +40,8 @@ public class XYZWingSolver extends Solver {
 
 						for (Cell[] row : board.rows) {
 							for (Cell cell : row) {
-								if (cell.canSee(pincers.get(i))) {
-									if (cell.canSee(pincers.get(j))) {
+								if (cell.canSee(pincers.get(i)) && cell != pincers.get(i)) {
+									if (cell.canSee(pincers.get(j)) && cell != pincers.get(j)) {
 										if (cell.canSee(key) && cell != key) {
 											nextMove.addChange(new NoteChange(cell, toRemove));
 										}

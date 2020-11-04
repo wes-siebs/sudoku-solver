@@ -10,11 +10,12 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
+import main.java.sudoku.components.Board;
 import main.java.sudoku.components.Cell;
 import main.java.sudoku.components.Puzzle;
 
 public class Frame implements KeyListener {
-
+	
 	private Puzzle puzzle;
 
 	private JFrame frame;
@@ -28,7 +29,7 @@ public class Frame implements KeyListener {
 
 	public Frame(Puzzle puzzle) {
 		this.puzzle = puzzle;
-
+		
 		this.frame = new JFrame("Sudoku Solver");
 
 		this.frame.setSize(SIZE + OFFSET_X * 2, SIZE + OFFSET_Y + OFFSET_X);
@@ -44,7 +45,7 @@ public class Frame implements KeyListener {
 		this.frame.setVisible(true);
 	}
 
-	public void draw() {
+	public void draw(Board board) {
 		int[] boxPos = new int[9];
 		for (int i = 0; i < boxPos.length; i++) {
 			boxPos[i] = i * (SIZE - 40) / 9;
@@ -53,7 +54,7 @@ public class Frame implements KeyListener {
 		this.g.setColor(Color.WHITE);
 		this.g.fillRect(0, 0, SIZE, SIZE);
 
-		Cell[][] cells = this.puzzle.getBoard().rows;
+		Cell[][] cells = board.rows;
 		this.g.setColor(Color.LIGHT_GRAY);
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {

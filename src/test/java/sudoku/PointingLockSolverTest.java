@@ -1,7 +1,6 @@
 package test.java.sudoku;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
@@ -22,7 +21,7 @@ public class PointingLockSolverTest extends SolverTest {
 		int[] columns = {0, 1, 2, 6, 7, 8};
 		int[] notes = {1, 1, 1, 1, 1, 1};
 		for (int i = 0; i < 6; i++) {
-			assertTrue(this.checkNoteChange(move.changeList.get(i), rows[i], columns[i], notes[i]));
+			this.checkNoteChange(move.changeList.get(i), rows[i], columns[i], notes[i]);
 		}
 	}
 

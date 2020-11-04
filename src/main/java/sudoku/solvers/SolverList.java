@@ -19,7 +19,8 @@ public class SolverList {
 			new XYWingSolver(),
 			new JellyfishSolver(),
 			new UniqueRectangleSolver(),
-			new XYZWingSolver()
+			new XYZWingSolver(),
+			new SimpleColoringSolver(),
 	};
 
 }

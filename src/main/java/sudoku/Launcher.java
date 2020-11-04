@@ -6,10 +6,11 @@ import main.java.sudoku.solvers.SolverList;
 public class Launcher {
 
 	public static void main(String[] args) {
-		Frame frame = new Frame(new Puzzle("resources/XYZWingTest.txt", SolverList.solverList));
+		Puzzle puzzle = new Puzzle("resources/SimpleColoringTest4.txt", SolverList.solverList);
+		Frame frame = new Frame(puzzle);
 
 		while (true) {
-			frame.draw();
+			frame.draw(puzzle.getBoard());
 
 			try {
 				Thread.sleep(20);
