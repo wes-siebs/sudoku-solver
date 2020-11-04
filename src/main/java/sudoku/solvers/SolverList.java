@@ -7,6 +7,8 @@ public class SolverList {
 			new NakedSingleSolver(),
 			new HiddenSingleSolver(),
 			new NakedPairSolver(),
+			new PointingLockSolver(),
+			new ClaimingLockSolver(),
 			new NakedTripleSolver(),
 			new NakedQuadSolver(),
 			new HiddenPairSolver(),

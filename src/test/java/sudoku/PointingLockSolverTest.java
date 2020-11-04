@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import main.java.sudoku.components.Move;
 import main.java.sudoku.solvers.PointingLockSolver;
 
-public class PointingLockSolverTests extends SolverTests {
+public class PointingLockSolverTest extends SolverTest {
 	
 	@Test
 	public void testPointingLockSolver() {

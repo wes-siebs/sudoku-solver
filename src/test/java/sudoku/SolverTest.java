@@ -8,7 +8,7 @@ import main.java.sudoku.components.NoteChange;
 import main.java.sudoku.components.PuzzleLoader;
 import main.java.sudoku.solvers.Solver;
 
-public class SolverTests {
+public class SolverTest {
 	
 	public Move getMove(String filename, Solver solver) {
 		Board board = new Board(PuzzleLoader.loadPuzzle(filename));
