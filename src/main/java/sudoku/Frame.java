@@ -20,6 +20,7 @@ public class Frame implements KeyListener {
 	private JFrame frame;
 	private Image img;
 	private Graphics2D g;
+	private int selection = 0;
 
 	private static final int SIZE = 400;
 	private static final int OFFSET_X = 8;
@@ -57,6 +58,9 @@ public class Frame implements KeyListener {
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
 				for (int ii = 0; ii < 9; ii++) {
+					if (selection > 0 && ii != selection - 1) {
+						continue;
+					}
 					if (cells[i][j].possibilities[ii + 1]) {
 						this.g.fillRect(20 + boxPos[j] + (ii % 3) * (SIZE - 40) / 27,
 								20 + boxPos[i] + (ii / 3) * (SIZE - 40) / 27, (SIZE - 40) / 27, (SIZE - 40) / 27);
@@ -95,12 +99,15 @@ public class Frame implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+		int code = e.getKeyCode();
+		if (code == KeyEvent.VK_SPACE) {
 			this.puzzle.solve();
-		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+		} else if (code == KeyEvent.VK_RIGHT) {
 			this.puzzle.redo();
-		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+		} else if (code == KeyEvent.VK_LEFT) {
 			this.puzzle.undo();
+		} else if (code >= KeyEvent.VK_0 && code <= KeyEvent.VK_9) {
+			this.selection = code - KeyEvent.VK_0;
 		}
 	}
 
