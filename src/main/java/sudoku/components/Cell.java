@@ -9,6 +9,10 @@ public class Cell {
 	public boolean[] possibilities;
 
 	public Cell(int value, int row, int column, int box) {
+		this(value, row, column, box, true);
+	}
+	
+	public Cell(int value, int row, int column, int box, boolean truth) {
 		this.row = row;
 		this.column = column;
 		this.box = box;
@@ -17,7 +21,7 @@ public class Cell {
 
 		if (value == 0) {
 			for (int i = 1; i < 10; i++) {
-				this.possibilities[i] = true;
+				this.possibilities[i] = truth;
 			}
 		}
 	}

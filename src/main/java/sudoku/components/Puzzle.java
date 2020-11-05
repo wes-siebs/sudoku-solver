@@ -13,11 +13,11 @@ public class Puzzle {
 	private int difficulty;
 
 	public Puzzle(String filename, Solver[] solvers) {
-		this(PuzzleLoader.loadPuzzle(filename), solvers);
+		this(BoardLoader.loadBoard(filename), solvers);
 	}
 
-	public Puzzle(int[][] values, Solver[] solvers) {
-		this.board = new Board(values);
+	public Puzzle(Board board, Solver[] solvers) {
+		this.board = board;
 		this.solvers = solvers;
 
 		this.undoMoves = new Stack<Move>();

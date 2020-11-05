@@ -4,27 +4,38 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import main.java.sudoku.components.Board;
+import main.java.sudoku.components.BoardLoader;
 import main.java.sudoku.components.Change;
 import main.java.sudoku.components.FillChange;
 import main.java.sudoku.components.Move;
 import main.java.sudoku.components.NoteChange;
-import main.java.sudoku.components.PuzzleLoader;
 import main.java.sudoku.solvers.Solver;
 
 public class SolverTest {
 
-	public Move[] getMoves(String filename, Solver solver, int num) {
-		Board board = new Board(PuzzleLoader.loadPuzzle(filename));
-		Move[] moves = new Move[num];
-		for (int i = 0; i < num; i++) {
-			moves[i] = solver.getNextMove(board);
-			moves[i].apply();
-		}
-		return moves;
-	}
-
 	public Move getMove(String filename, Solver solver) {
-		return this.getMoves(filename, solver, 1)[0];
+		Board board = BoardLoader.loadBoard(filename);
+		return solver.getNextMove(board);
+	}
+	
+	public boolean containsNoteChange(Move move, int row, int column, int note) {
+		for (Change change : move.changeList) {
+			if (change instanceof NoteChange) {
+				NoteChange nchange = (NoteChange) change;
+				
+				if (nchange.cell.row != row) {
+					continue;
+				} else if (nchange.cell.column != column) {
+					continue;
+				} else if (nchange.note != note) {
+					continue;
+				} else {
+					return true;
+				}
+			}
+		}
+		
+		return false;
 	}
 
 	public boolean checkFillChange(Change change, int row, int column, int value) {

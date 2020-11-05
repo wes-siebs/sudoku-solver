@@ -2,6 +2,14 @@ package main.java.sudoku;
 
 public class Utilities {
 	
+	public static int getBox(int row, int column, int unit) {
+		return (row / unit) * unit + (column / unit);
+	}
+	
+	public static int getBoxPos(int row, int column, int unit) {
+		return (row % unit) * unit + (column % unit);
+	}
+	
 	public static int unfold(int n) {
 		if (n < 2) {
 			return 0;
