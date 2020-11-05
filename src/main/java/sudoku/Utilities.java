@@ -3,8 +3,10 @@ package main.java.sudoku;
 public class Utilities {
 	
 	public static int unfold(int n) {
-		if (n == 1) {
+		if (n < 2) {
 			return 0;
+		} else if (n == 2) {
+			return 1;
 		} else {
 			return 1 + unfold(n >> 1);
 		}
