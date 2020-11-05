@@ -21,7 +21,8 @@ public class SolverList {
 			new UniqueRectangleSolver(),
 			new XYZWingSolver(),
 			new SimpleColoringSolver(),
-			new XYChainSolver()
+			new XYChainSolver(),
+			new WXYZWingSolver()
 	};
 
 }

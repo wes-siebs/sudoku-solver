@@ -15,13 +15,14 @@ import main.java.sudoku.components.Cell;
 import main.java.sudoku.components.Puzzle;
 
 public class Frame implements KeyListener {
-	
+
 	private Puzzle puzzle;
 
 	private JFrame frame;
 	private Image img;
 	private Graphics2D g;
-	private int selection = 0;
+	private boolean[] show;
+	private boolean showAll;
 
 	private static final int SIZE = 400;
 	private static final int OFFSET_X = 8;
@@ -29,7 +30,12 @@ public class Frame implements KeyListener {
 
 	public Frame(Puzzle puzzle) {
 		this.puzzle = puzzle;
-		
+		this.show = new boolean[9];
+		for (int i = 0; i < this.show.length; i++) {
+			this.show[i] = true;
+		}
+		this.showAll = false;
+
 		this.frame = new JFrame("Sudoku Solver");
 
 		this.frame.setSize(SIZE + OFFSET_X * 2, SIZE + OFFSET_Y + OFFSET_X);
@@ -59,7 +65,7 @@ public class Frame implements KeyListener {
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
 				for (int ii = 0; ii < 9; ii++) {
-					if (selection > 0 && ii != selection - 1) {
+					if (!this.show[ii]) {
 						continue;
 					}
 					if (cells[i][j].possibilities[ii + 1]) {
@@ -107,8 +113,14 @@ public class Frame implements KeyListener {
 			this.puzzle.redo();
 		} else if (code == KeyEvent.VK_LEFT) {
 			this.puzzle.undo();
-		} else if (code >= KeyEvent.VK_0 && code <= KeyEvent.VK_9) {
-			this.selection = code - KeyEvent.VK_0;
+		} else if (code == KeyEvent.VK_0) {
+			for (int i = 0; i < this.show.length; i++) {
+				this.show[i] = this.showAll;
+			}
+			this.showAll = !this.showAll;
+		} else if (code > KeyEvent.VK_0 && code <= KeyEvent.VK_9) {
+			int index = code - KeyEvent.VK_1;
+			this.show[index] = !this.show[index];
 		}
 	}
 
