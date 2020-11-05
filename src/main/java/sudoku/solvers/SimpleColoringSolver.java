@@ -18,36 +18,38 @@ public class SimpleColoringSolver extends Solver {
 	@Override
 	public Move getNextMove(Board board) {
 		Move nextMove = new Move();
-		
+
 		for (int i = 1; i <= 9; i++) {
 			this.checkNotes(board, i, nextMove, this.getChains(board, i));
-			
+
 			if (!nextMove.isEmpty()) {
 				break;
 			}
 		}
-		
+
 		return nextMove;
 	}
-	
+
 	private void checkNotes(Board board, int note, Move move, List<Cell[]> chains) {
 		List<Cell> redCells = new ArrayList<>();
 		List<Cell> blueCells = new ArrayList<>();
-		
+
 		if (chains.isEmpty()) {
 			return;
 		}
-		
+
 		redCells.add(chains.get(0)[0]);
 		boolean madeChain = true;
 		while (madeChain) {
 			madeChain = false;
-			
+
 			for (int i = 0; i < chains.size(); i++) {
+
 				Cell[] chain = chains.get(i);
+
 				List<Cell> list = null;
 				Cell toAdd = null;
-				
+
 				if (redCells.contains(chain[0])) {
 					list = blueCells;
 					toAdd = chain[1];
@@ -63,17 +65,16 @@ public class SimpleColoringSolver extends Solver {
 				} else {
 					continue;
 				}
-				
+
 				if (!list.contains(toAdd)) {
 					list.add(toAdd);
 				}
-				
-				chains.remove(chain);
+
+				chains.remove(i--);
 				madeChain = true;
-				break;
 			}
 		}
-		
+
 		if (this.violatesRule2(redCells)) {
 			for (Cell cell : redCells) {
 				move.addChange(new NoteChange(cell, note));
@@ -89,42 +90,42 @@ public class SimpleColoringSolver extends Solver {
 				for (Cell cell : row) {
 					boolean seesRed = false;
 					boolean seesBlue = false;
-					
+
 					for (Cell red : redCells) {
 						if (cell.canSee(red) && cell != red) {
 							seesRed = true;
 							break;
 						}
 					}
-					for (Cell blue: blueCells) {
+					for (Cell blue : blueCells) {
 						if (cell.canSee(blue) && cell != blue) {
 							seesBlue = true;
 							break;
 						}
 					}
-					
+
 					if (seesRed && seesBlue) {
 						move.addChange(new NoteChange(cell, note));
 					}
 				}
 			}
 		}
-		
+
 		if (move.isEmpty() && !chains.isEmpty()) {
 			checkNotes(board, note, move, chains);
 		}
 	}
-	
+
 	private List<Cell[]> getChains(Board board, int note) {
 		List<Cell[]> chainList = new ArrayList<>();
-		
+
 		getChainsHelper(chainList, board.rows, note);
 		getChainsHelper(chainList, board.columns, note);
 		getChainsHelper(chainList, board.boxes, note);
-		
+
 		return chainList;
 	}
-	
+
 	private void getChainsHelper(List<Cell[]> chains, Cell[][] houses, int note) {
 		for (Cell[] house : houses) {
 			Cell[] chain = new Cell[2];
@@ -161,10 +162,10 @@ public class SimpleColoringSolver extends Solver {
 				}
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	@Override
 	public int getDifficulty() {
 		return 6;

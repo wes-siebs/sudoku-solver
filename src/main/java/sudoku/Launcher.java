@@ -6,7 +6,7 @@ import main.java.sudoku.solvers.SolverList;
 public class Launcher {
 
 	public static void main(String[] args) {
-		Puzzle puzzle = new Puzzle("resources/test/SimpleColoring4", SolverList.solverList);
+		Puzzle puzzle = new Puzzle("resources/test/SimpleColoring2", SolverList.solverList);
 		Frame frame = new Frame(puzzle);
 
 		while (true) {

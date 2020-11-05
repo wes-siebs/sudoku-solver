@@ -16,11 +16,11 @@ public class SimpleColoringSolverTest extends SolverTest {
 		Move move = this.getMove("resources/test/SimpleColoring2", new SimpleColoringSolver());
 
 		assertNotNull(move);
-		assertEquals(5, move.changeList.size());
+		assertEquals(9, move.changeList.size());
 
-		int[] rows = { 0, 0, 2, 4, 5 };
-		int[] columns = { 2, 4, 1, 1, 3 };
-		int[] notes = { 9, 9, 9, 9, 9, 9 };
+		int[] rows = { 0, 0, 1, 3, 4, 5, 6, 7, 8 };
+		int[] columns = { 1, 3, 0, 5, 0, 6, 2, 4, 8 };
+		int[] notes = { 5, 5, 5, 5, 5, 5, 5, 5, 5 };
 
 		for (int i = 0; i < rows.length; i++) {
 			if (!this.containsNoteChange(move, rows[i], columns[i], notes[i])) {
@@ -34,13 +34,14 @@ public class SimpleColoringSolverTest extends SolverTest {
 		Move move = this.getMove("resources/test/SimpleColoring4", new SimpleColoringSolver());
 
 		assertNotNull(move);
-		assertEquals(3, move.changeList.size());
+		assertEquals(1, move.changeList.size());
 
-		int[] rows = { 3, 4, 8 };
-		int[] columns = { 4, 0, 3 };
+		int[] rows = { 1 };
+		int[] columns = { 4 };
+		int[] notes = { 3 };
 
 		for (int i = 0; i < rows.length; i++) {
-			if (!this.containsNoteChange(move, rows[i], columns[i], 1)) {
+			if (!this.containsNoteChange(move, rows[i], columns[i], notes[i])) {
 				fail("Did not contain change " + i);
 			}
 		}
