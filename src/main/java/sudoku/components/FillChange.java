@@ -26,5 +26,10 @@ public class FillChange extends Change {
 	public boolean isValid() {
 		return this.oldValue == 0;
 	}
+	
+	@Override
+	public String toString() {
+		return "Fill " + cell.coordString() + " with " + newValue;
+	}
 
 }

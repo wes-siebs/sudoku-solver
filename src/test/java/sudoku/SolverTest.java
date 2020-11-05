@@ -37,21 +37,24 @@ public class SolverTest {
 		
 		return false;
 	}
-
-	public boolean checkFillChange(Change change, int row, int column, int value) {
-		if (change instanceof FillChange) {
-			FillChange fillChange = (FillChange) change;
-			if (fillChange.cell.row != row) {
-				return false;
+	
+	public boolean containsFillChange(Move move, int row, int column, int value) {
+		for (Change change : move.changeList) {
+			if (change instanceof FillChange) {
+				FillChange nchange = (FillChange) change;
+				
+				if (nchange.cell.row != row) {
+					continue;
+				} else if (nchange.cell.column != column) {
+					continue;
+				} else if (nchange.newValue != value) {
+					continue;
+				} else {
+					return true;
+				}
 			}
-			if (fillChange.cell.column != column) {
-				return false;
-			}
-			if (fillChange.newValue != value) {
-				return false;
-			}
-			return true;
 		}
+		
 		return false;
 	}
 

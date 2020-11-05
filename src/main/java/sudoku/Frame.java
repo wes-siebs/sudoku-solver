@@ -68,7 +68,7 @@ public class Frame implements KeyListener {
 					if (!this.show[ii]) {
 						continue;
 					}
-					if (cells[i][j].possibilities[ii + 1]) {
+					if (cells[i][j].notes[ii + 1]) {
 						this.g.fillRect(20 + boxPos[j] + (ii % 3) * (SIZE - 40) / 27,
 								20 + boxPos[i] + (ii / 3) * (SIZE - 40) / 27, (SIZE - 40) / 27, (SIZE - 40) / 27);
 					}

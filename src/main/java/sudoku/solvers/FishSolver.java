@@ -29,7 +29,7 @@ public abstract class FishSolver extends Solver {
 			for (Cell[] house : houses) {
 				int count = 0;
 				for (Cell cell : house) {
-					if (cell.possibilities[i]) {
+					if (cell.notes[i]) {
 						count++;
 					}
 				}
@@ -49,7 +49,7 @@ public abstract class FishSolver extends Solver {
 				for (int l = 0; l < houses.length; l++) {
 					boolean add = false;
 					for (int pos : tuple) {
-						if (candidates.get(pos)[l].possibilities[i]) {
+						if (candidates.get(pos)[l].notes[i]) {
 							add = true;
 							break;
 						}

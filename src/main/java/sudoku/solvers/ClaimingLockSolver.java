@@ -31,7 +31,7 @@ public class ClaimingLockSolver extends Solver {
 			for (Cell[] house : houses) {
 				List<Cell> candidates = new ArrayList<>();
 				for (Cell cell : house) {
-					if (cell.possibilities[i]) {
+					if (cell.notes[i]) {
 						candidates.add(cell);
 					}
 				}

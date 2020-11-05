@@ -39,7 +39,7 @@ public class EmptyRectangleSolver extends Solver {
 					}
 
 					Cell cell = board.rows[pos[0]][pos[1]];
-					if (cell.possibilities[note]) {
+					if (cell.notes[note]) {
 						nextMove.addChange(new NoteChange(cell, note));
 						return nextMove;
 					}
@@ -64,7 +64,7 @@ public class EmptyRectangleSolver extends Solver {
 						if (board.rows[row][column].value == note) {
 							fillCount++;
 						}
-						if (board.rows[row][column].possibilities[note]) {
+						if (board.rows[row][column].notes[note]) {
 							noteCount++;
 						}
 					}
@@ -81,7 +81,7 @@ public class EmptyRectangleSolver extends Solver {
 						for (int i = yoff; i < yoff + 3; i++) {
 							for (int j = xoff; j < xoff + 3; j++) {
 								Cell cell = board.rows[i][j];
-								if (cell.possibilities[note]) {
+								if (cell.notes[note]) {
 									if (row != i && column != j) {
 										good = false;
 										break;
@@ -139,7 +139,7 @@ public class EmptyRectangleSolver extends Solver {
 		Cell[] chain = new Cell[2];
 
 		for (Cell cell : house) {
-			if (cell.getNumNotes() == 2 && cell.possibilities[note]) {
+			if (cell.getNumNotes() == 2 && cell.notes[note]) {
 				if (chain[0] == null) {
 					chain[0] = cell;
 				} else if (chain[1] == null) {

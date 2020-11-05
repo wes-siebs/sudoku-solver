@@ -6,7 +6,7 @@ public class Cell {
 	public int column;
 	public int box;
 	public int value;
-	public boolean[] possibilities;
+	public boolean[] notes;
 
 	public Cell(int value, int row, int column, int box) {
 		this(value, row, column, box, true);
@@ -17,11 +17,11 @@ public class Cell {
 		this.column = column;
 		this.box = box;
 		this.value = value;
-		this.possibilities = new boolean[10];
+		this.notes = new boolean[10];
 
 		if (value == 0) {
 			for (int i = 1; i < 10; i++) {
-				this.possibilities[i] = truth;
+				this.notes[i] = truth;
 			}
 		}
 	}
@@ -36,7 +36,7 @@ public class Cell {
 	
 	public int getNumNotes() {
 		int count = 0;
-		for (boolean note : this.possibilities) {
+		for (boolean note : this.notes) {
 			count += note ? 1 : 0;
 		}
 		return count;
@@ -44,8 +44,8 @@ public class Cell {
 
 	public int getIntNotes() {
 		int value = 0;
-		for (int i = 0; i < this.possibilities.length; i++) {
-			if (this.possibilities[i]) {
+		for (int i = 0; i < this.notes.length; i++) {
+			if (this.notes[i]) {
 				value |= 1 << i;
 			}
 		}

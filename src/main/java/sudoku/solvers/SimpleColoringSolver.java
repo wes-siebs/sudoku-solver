@@ -131,7 +131,7 @@ public class SimpleColoringSolver extends Solver {
 			Cell[] chain = new Cell[2];
 			boolean valid = false;
 			for (Cell cell : house) {
-				if (cell.possibilities[note]) {
+				if (cell.notes[note]) {
 					if (chain[0] == null) {
 						chain[0] = cell;
 					} else if (chain[1] == null) {

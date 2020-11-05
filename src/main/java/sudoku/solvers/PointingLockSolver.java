@@ -23,7 +23,7 @@ public class PointingLockSolver extends Solver {
 			for (Cell[] box : board.boxes) {
 				List<Cell> candidates = new ArrayList<>();
 				for (Cell cell : box) {
-					if (cell.possibilities[i]) {
+					if (cell.notes[i]) {
 						candidates.add(cell);
 					}
 				}

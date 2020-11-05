@@ -78,7 +78,7 @@ public class WXYZWingSolver extends Solver {
 									remove = false;
 									break;
 								}
-								if (candidate.possibilities[unrestricted] && !candidate.canSee(cell)) {
+								if (candidate.notes[unrestricted] && !candidate.canSee(cell)) {
 									remove = false;
 									break;
 								}
@@ -114,7 +114,7 @@ public class WXYZWingSolver extends Solver {
 	private boolean isRestricted(Cell[] cells, int note) {
 		List<Cell> candidates = new ArrayList<>();
 		for (Cell cell : cells) {
-			if (cell.possibilities[note]) {
+			if (cell.notes[note]) {
 				candidates.add(cell);
 			}
 		}

@@ -19,8 +19,8 @@ public class NakedSingleSolver extends Solver {
 			for (Cell cell : row) {
 				int count = 0;
 				int newValue = 0;
-				for (int i = 0; i < cell.possibilities.length; i++) {
-					if (cell.possibilities[i]) {
+				for (int i = 0; i < cell.notes.length; i++) {
+					if (cell.notes[i]) {
 						if (count == 0) {
 							count = 1;
 							newValue = i;

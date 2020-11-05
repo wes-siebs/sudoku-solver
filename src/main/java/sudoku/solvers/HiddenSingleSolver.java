@@ -25,15 +25,15 @@ public class HiddenSingleSolver extends Solver {
 				Cell boxCell = null;
 
 				for (int k = 0; k < 9; k++) {
-					if (board.rows[j][k].possibilities[i]) {
+					if (board.rows[j][k].notes[i]) {
 						rowCount++;
 						rowCell = board.rows[j][k];
 					}
-					if (board.columns[j][k].possibilities[i]) {
+					if (board.columns[j][k].notes[i]) {
 						columnCount++;
 						columnCell = board.columns[j][k];
 					}
-					if (board.boxes[j][k].possibilities[i]) {
+					if (board.boxes[j][k].notes[i]) {
 						boxCount++;
 						boxCell = board.boxes[j][k];
 					}

@@ -19,8 +19,8 @@ public class OpenSingleSolver extends Solver {
 			for (Cell cell : row) {
 				if (cell.getNumNotes() == 1) {
 					int note = 0;
-					for (int i = 0; i < cell.possibilities.length; i++) {
-						if (cell.possibilities[i]) {
+					for (int i = 0; i < cell.notes.length; i++) {
+						if (cell.notes[i]) {
 							note = i;
 							break;
 						}

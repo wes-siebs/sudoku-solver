@@ -74,7 +74,7 @@ public abstract class NakedTupleSolver extends Solver {
 		List<Integer> notes = new ArrayList<>();
 		for (int i = 1; i <= cells.length; i++) {
 			for (int index : indices) {
-				if (cells[index].possibilities[i]) {
+				if (cells[index].notes[i]) {
 					notes.add(i);
 					break;
 				}

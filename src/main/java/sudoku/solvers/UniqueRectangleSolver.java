@@ -64,8 +64,8 @@ public class UniqueRectangleSolver extends Solver {
 	}
 
 	private void subtractNotes(Cell a, Cell b, Move move) {
-		for (int i = 0; i < b.possibilities.length; i++) {
-			if (b.possibilities[i]) {
+		for (int i = 0; i < b.notes.length; i++) {
+			if (b.notes[i]) {
 				move.addChange(new NoteChange(a, i));
 			}
 		}

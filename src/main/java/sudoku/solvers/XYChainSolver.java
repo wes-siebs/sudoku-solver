@@ -104,7 +104,7 @@ public class XYChainSolver extends Solver {
 			int toRemove = Utilities.unfold(overlap1);
 			for (Cell[] row : board.rows) {
 				for (Cell check : row) {
-					if (check.possibilities[toRemove]) {
+					if (check.notes[toRemove]) {
 						if (check.canSee(root) && check.canSee(leaf) && !chain.contains(check)) {
 							changes.add(new NoteChange(check, toRemove));
 						}
