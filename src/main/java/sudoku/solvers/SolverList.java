@@ -22,7 +22,8 @@ public class SolverList {
 			new XYZWingSolver(),
 			new SimpleColoringSolver(),
 			new XYChainSolver(),
-			new WXYZWingSolver()
+			new EmptyRectangleSolver(),
+			new WXYZWingSolver(),
 	};
 
 }
