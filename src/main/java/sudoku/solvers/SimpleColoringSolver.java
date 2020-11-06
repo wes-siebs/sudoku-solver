@@ -16,18 +16,14 @@ public class SimpleColoringSolver extends Solver {
 	}
 
 	@Override
-	public Move getNextMove(Board board) {
-		Move nextMove = new Move();
-
+	protected void makeNextMove(Move move, Board board) {
 		for (int i = 1; i <= 9; i++) {
-			this.checkNotes(board, i, nextMove, this.getChains(board, i));
+			this.checkNotes(board, i, move, this.getChains(board, i));
 
-			if (!nextMove.isEmpty()) {
+			if (!move.isEmpty()) {
 				break;
 			}
 		}
-
-		return nextMove;
 	}
 
 	private void checkNotes(Board board, int note, Move move, List<Cell[]> chains) {

@@ -17,9 +17,7 @@ public class WXYZWingSolver extends Solver {
 	}
 
 	@Override
-	public Move getNextMove(Board board) {
-		Move nextMove = new Move();
-
+	protected void makeNextMove(Move move, Board board) {
 		int[][] noteTuples = Utilities.nCkTuples(9, 4, 1);
 		for (int[] tuple : noteTuples) {
 			List<Cell> candidates = new ArrayList<>();
@@ -85,21 +83,19 @@ public class WXYZWingSolver extends Solver {
 							}
 
 							if (remove) {
-								nextMove.addChange(new NoteChange(cell, unrestricted));
+								move.addChange(new NoteChange(cell, unrestricted));
 							}
 						}
 					}
 
-					if (!nextMove.isEmpty()) {
-						return nextMove;
+					if (!move.isEmpty()) {
+						return;
 					}
 				}
 
 			}
 
 		}
-
-		return nextMove;
 	}
 
 	private boolean areValid(Cell[] cells, int value) {

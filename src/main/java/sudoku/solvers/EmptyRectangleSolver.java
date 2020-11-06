@@ -16,9 +16,7 @@ public class EmptyRectangleSolver extends Solver {
 	}
 
 	@Override
-	public Move getNextMove(Board board) {
-		Move nextMove = new Move();
-
+	protected void makeNextMove(Move move, Board board) {
 		for (int note = 1; note <= 9; note++) {
 			List<Cell> ERIs = this.getERIs(board, note);
 			List<Cell[]> bivalueChains = this.getBivalueChains(board, note);
@@ -40,14 +38,14 @@ public class EmptyRectangleSolver extends Solver {
 
 					Cell cell = board.rows[pos[0]][pos[1]];
 					if (cell.notes[note]) {
-						nextMove.addChange(new NoteChange(cell, note));
-						return nextMove;
+						move.addChange(new NoteChange(cell, note));
+						return;
 					}
 				}
 			}
 		}
 
-		return nextMove;
+		return;
 	}
 
 	private List<Cell> getERIs(Board board, int note) {

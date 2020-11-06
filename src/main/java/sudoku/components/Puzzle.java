@@ -1,5 +1,7 @@
 package main.java.sudoku.components;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 import main.java.sudoku.solvers.Solver;
@@ -10,6 +12,7 @@ public class Puzzle {
 	private Solver[] solvers;
 	private Stack<Move> undoMoves;
 	private Stack<Move> redoMoves;
+	private List<Move> moves;
 	private int difficulty;
 
 	public Puzzle(String filename, Solver[] solvers) {
@@ -22,6 +25,7 @@ public class Puzzle {
 
 		this.undoMoves = new Stack<Move>();
 		this.redoMoves = new Stack<Move>();
+		this.moves = new ArrayList<Move>();
 		this.difficulty = -1;
 	}
 
@@ -42,17 +46,24 @@ public class Puzzle {
 	}
 
 	public void solve() {
-		Move nextMove;
-		while ((nextMove = takeStep()) != null) {
-			nextMove.apply();
-			this.undoMoves.push(nextMove);
-		}
-
-		if (this.isSolved()) {
-			System.out.println("Puzzle was solved.");
-			System.out.println(difficulty + " points");
+		if (!this.moves.isEmpty()) {
+			while (this.canRedo()) {
+				this.redo();
+			}
 		} else {
-			System.out.println("Puzzle was not solved.");
+			Move nextMove;
+			while ((nextMove = takeStep()) != null) {
+				nextMove.apply();
+				this.undoMoves.push(nextMove);
+				this.moves.add(nextMove);
+			}
+			
+			if (this.isSolved()) {
+				System.out.println("Puzzle was solved.");
+				System.out.println(difficulty + " points");
+			} else {
+				System.out.println("Puzzle was not solved.");
+			}
 		}
 	}
 
@@ -96,5 +107,15 @@ public class Puzzle {
 
 	public int difficulty() {
 		return this.difficulty;
+	}
+
+	public int[] getChart() {
+		int[] vals = new int[this.moves.size()];
+		
+		for (int i = 0; i < vals.length; i++) {
+			vals[i] = this.moves.get(i).difficulty;
+		}
+		
+		return vals;
 	}
 }

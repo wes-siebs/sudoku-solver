@@ -18,9 +18,7 @@ public class XCycleSolver extends Solver {
 	}
 
 	@Override
-	public Move getNextMove(Board board) {
-		Move nextMove = new Move();
-
+	protected void makeNextMove(Move move, Board board) {
 		for (int note = 1; note <= 9; note++) {
 			List<Cell> candidates = new ArrayList<>();
 			Queue<XCycle> cycles = new LinkedList<>();
@@ -40,23 +38,23 @@ public class XCycleSolver extends Solver {
 					if (newCycle != null) {
 						if (newCycle.loops()) {
 							if (newCycle.chain.size() % 2 == 0) {
-								this.handleDisLoop(newCycle, nextMove);
+								this.handleDisLoop(newCycle, move);
 							} else {
-								this.handleConLoop(newCycle, candidates, nextMove);
+								this.handleConLoop(newCycle, candidates, move);
 							}
 
-							if (!nextMove.isEmpty()) {
-								return nextMove;
+							if (!move.isEmpty()) {
+								return;
 							}
 						} else {
 							for (Cell pinched : candidates) {
 								if (newCycle.pinches(pinched)) {
-									nextMove.addChange(new NoteChange(pinched, note));
+									move.addChange(new NoteChange(pinched, note));
 								}
 							}
-							if (!nextMove.isEmpty()) {
+							if (!move.isEmpty()) {
 								System.out.println(newCycle.toString());
-								return nextMove;
+								return;
 							}
 							cycles.add(newCycle);
 						}
@@ -64,8 +62,6 @@ public class XCycleSolver extends Solver {
 				}
 			}
 		}
-
-		return nextMove;
 	}
 
 	private void handleDisLoop(XCycle cycle, Move move) {

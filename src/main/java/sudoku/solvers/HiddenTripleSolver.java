@@ -11,8 +11,8 @@ public class HiddenTripleSolver extends HiddenTupleSolver {
 	}
 
 	@Override
-	public Move getNextMove(Board board) {
-		return super.getNextMove(board, 3);
+	protected void makeNextMove(Move move, Board board) {
+		super.makeNextMove(move, board, 3);
 	}
 
 	@Override

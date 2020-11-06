@@ -11,8 +11,8 @@ public class HiddenPairSolver extends HiddenTupleSolver {
 	}
 
 	@Override
-	public Move getNextMove(Board board) {
-		return super.getNextMove(board, 2);
+	protected void makeNextMove(Move move, Board board) {
+		super.makeNextMove(move, board, 2);
 	}
 
 	@Override

@@ -16,14 +16,10 @@ public class ClaimingLockSolver extends Solver {
 	}
 
 	@Override
-	public Move getNextMove(Board board) {
-		Move nextMove = new Move();
-
-		if (checkHouses(board, board.rows, nextMove)) {
-			checkHouses(board, board.columns, nextMove);
+	protected void makeNextMove(Move move, Board board) {
+		if (checkHouses(board, board.rows, move)) {
+			checkHouses(board, board.columns, move);
 		}
-		
-		return nextMove;
 	}
 
 	private boolean checkHouses(Board board, Cell[][] houses, Move move) {

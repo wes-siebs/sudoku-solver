@@ -11,28 +11,24 @@ import main.java.sudoku.components.NoteChange;
 
 public abstract class NakedTupleSolver extends Solver {
 
-	protected Move getNextMove(Board board, int tupleSize) {
-		Move nextMove = new Move();
-
+	protected void makeNextMove(Move move, Board board, int tupleSize) {
 		int[][] tuples = Utilities.nCkTuples(board.rows.length, tupleSize, 0);
 		for (int[] tuple : tuples) {
 			for (int i = 0; i < 9; i++) {
-				checkHouse(board.rows[i], nextMove, tuple);
-				if (!nextMove.isEmpty()) {
-					return nextMove;
+				checkHouse(board.rows[i], move, tuple);
+				if (!move.isEmpty()) {
+					return;
 				}
-				checkHouse(board.columns[i], nextMove, tuple);
-				if (!nextMove.isEmpty()) {
-					return nextMove;
+				checkHouse(board.columns[i], move, tuple);
+				if (!move.isEmpty()) {
+					return;
 				}
-				checkHouse(board.boxes[i], nextMove, tuple);
-				if (!nextMove.isEmpty()) {
-					return nextMove;
+				checkHouse(board.boxes[i], move, tuple);
+				if (!move.isEmpty()) {
+					return;
 				}
 			}
 		}
-
-		return nextMove;
 	}
 
 	private void checkHouse(Cell[] house, Move move, int[] tuple) {

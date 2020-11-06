@@ -17,9 +17,7 @@ public class XYWingSolver extends Solver {
 	}
 
 	@Override
-	public Move getNextMove(Board board) {
-		Move nextMove = new Move();
-		
+	protected void makeNextMove(Move move, Board board) {
 		List<Cell> candidates = new ArrayList<Cell>();
 		for (Cell[] row : board.rows) {
 			for (Cell cell : row) {
@@ -56,20 +54,18 @@ public class XYWingSolver extends Solver {
 						for (Cell[] row : board.rows) {
 							for (Cell cell : row) {
 								if (p1.canSee(cell) && p2.canSee(cell) && cell != key) {
-									nextMove.addChange(new NoteChange(cell, toRemove));
+									move.addChange(new NoteChange(cell, toRemove));
 								}
 							}
 						}
 						
-						if (!nextMove.isEmpty()) {
-							return nextMove;
+						if (!move.isEmpty()) {
+							return;
 						}
 					}
 				}
 			}
 		}
-		
-		return nextMove;
 	}
 	
 	private int checkTriple(Cell[] cells) {

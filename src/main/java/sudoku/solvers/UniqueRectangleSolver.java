@@ -14,9 +14,7 @@ public class UniqueRectangleSolver extends Solver {
 	}
 
 	@Override
-	public Move getNextMove(Board board) {
-		Move nextMove = new Move();
-
+	protected void makeNextMove(Move move, Board board) {
 		int[][] tuples = Utilities.nCkTuples(9, 2, 0);
 		for (int[] rows : tuples) {
 			for (int[] columns : tuples) {
@@ -45,22 +43,20 @@ public class UniqueRectangleSolver extends Solver {
 				}
 
 				if (notes[0] == notes[1] && notes[1] == notes[2]) {
-					subtractNotes(cells[3], cells[0], nextMove);
+					subtractNotes(cells[3], cells[0], move);
 				} else if (notes[0] == notes[1] && notes[1] == notes[3]) {
-					subtractNotes(cells[2], cells[0], nextMove);
+					subtractNotes(cells[2], cells[0], move);
 				} else if (notes[0] == notes[2] && notes[2] == notes[3]) {
-					subtractNotes(cells[1], cells[0], nextMove);
+					subtractNotes(cells[1], cells[0], move);
 				} else if (notes[1] == notes[2] && notes[2] == notes[3]) {
-					subtractNotes(cells[0], cells[1], nextMove);
+					subtractNotes(cells[0], cells[1], move);
 				}
 
-				if (!nextMove.isEmpty()) {
-					return nextMove;
+				if (!move.isEmpty()) {
+					return;
 				}
 			}
 		}
-
-		return nextMove;
 	}
 
 	private void subtractNotes(Cell a, Cell b, Move move) {

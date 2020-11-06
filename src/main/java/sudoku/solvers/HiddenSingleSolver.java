@@ -12,9 +12,7 @@ public class HiddenSingleSolver extends Solver {
 	}
 
 	@Override
-	public Move getNextMove(Board board) {
-		Move nextMove = new Move();
-
+	protected void makeNextMove(Move move, Board board) {
 		for (int i = 1; i <= 9; i++) {
 			for (int j = 0; j < 9; j++) {
 				int rowCount = 0;
@@ -40,23 +38,21 @@ public class HiddenSingleSolver extends Solver {
 				}
 
 				if (rowCount == 1) {
-					this.addChanges(board, rowCell, i, nextMove);
-					return nextMove;
+					this.addChanges(board, rowCell, i, move);
+					return;
 				}
 
 				if (columnCount == 1) {
-					this.addChanges(board, columnCell, i, nextMove);
-					return nextMove;
+					this.addChanges(board, columnCell, i, move);
+					return;
 				}
 
 				if (boxCount == 1) {
-					this.addChanges(board, boxCell, i, nextMove);
-					return nextMove;
+					this.addChanges(board, boxCell, i, move);
+					return;
 				}
 			}
 		}
-
-		return nextMove;
 	}
 
 	@Override

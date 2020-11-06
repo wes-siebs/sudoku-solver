@@ -11,16 +11,12 @@ import main.java.sudoku.components.NoteChange;
 
 public abstract class FishSolver extends Solver {
 
-	protected Move getNextMove(Board board, int tupleSize) {
-		Move nextMove = new Move();
+	protected void makeNextMove(Move move, Board board, int tupleSize) {
+		checkHouses(board.rows, board.columns, move, tupleSize);
 
-		checkHouses(board.rows, board.columns, nextMove, tupleSize);
-
-		if (nextMove.isEmpty()) {
-			checkHouses(board.columns, board.rows, nextMove, tupleSize);
+		if (move.isEmpty()) {
+			checkHouses(board.columns, board.rows, move, tupleSize);
 		}
-
-		return nextMove;
 	}
 
 	private void checkHouses(Cell[][] houses, Cell[][] crossHouses, Move move, int tupleSize) {

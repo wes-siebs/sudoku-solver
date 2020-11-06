@@ -17,9 +17,7 @@ public class XYZWingSolver extends Solver {
 	}
 
 	@Override
-	public Move getNextMove(Board board) {
-		Move nextMove = new Move();
-
+	protected void makeNextMove(Move move, Board board) {
 		List<Cell> keys = this.getKeys(board);
 
 		for (Cell key : keys) {
@@ -43,22 +41,20 @@ public class XYZWingSolver extends Solver {
 								if (cell.canSee(pincers.get(i))) {
 									if (cell.canSee(pincers.get(j))) {
 										if (cell.canSee(key)) {
-											nextMove.addChange(new NoteChange(cell, toRemove));
+											move.addChange(new NoteChange(cell, toRemove));
 										}
 									}
 								}
 							}
 						}
 
-						if (!nextMove.isEmpty()) {
-							return nextMove;
+						if (!move.isEmpty()) {
+							return;
 						}
 					}
 				}
 			}
-		}
-
-		return nextMove;
+		};
 	}
 
 	private List<Cell> getKeys(Board board) {

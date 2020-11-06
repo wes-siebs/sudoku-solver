@@ -16,9 +16,7 @@ public class PointingLockSolver extends Solver {
 	}
 
 	@Override
-	public Move getNextMove(Board board) {
-		Move nextMove = new Move();
-		
+	protected void makeNextMove(Move move, Board board) {
 		for (int i = 0; i < board.boxes.length; i++) {
 			for (Cell[] box : board.boxes) {
 				List<Cell> candidates = new ArrayList<>();
@@ -44,28 +42,26 @@ public class PointingLockSolver extends Solver {
 					if (sameRow) {
 						for (int j = 0; j < board.rows.length; j++) {
 							if (board.rows[row][j].box != box[0].box) {
-								nextMove.addChange(new NoteChange(board.rows[row][j], i));
+								move.addChange(new NoteChange(board.rows[row][j], i));
 							}
 						}
-						if (!nextMove.isEmpty()) {
-							return nextMove;
+						if (!move.isEmpty()) {
+							return;
 						}
 					}
 					if (sameColumn) {
 						for (int j = 0; j < board.columns.length; j++) {
 							if (board.columns[column][j].box != box[0].box) {
-								nextMove.addChange(new NoteChange(board.columns[column][j], i));
+								move.addChange(new NoteChange(board.columns[column][j], i));
 							}
 						}
-						if (!nextMove.isEmpty()) {
-							return nextMove;
+						if (!move.isEmpty()) {
+							return;
 						}
 					}
 				}
 			}
 		}
-
-		return nextMove;
 	}
 
 	@Override

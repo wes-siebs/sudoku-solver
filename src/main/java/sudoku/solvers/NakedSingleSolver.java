@@ -12,9 +12,7 @@ public class NakedSingleSolver extends Solver {
 	}
 
 	@Override
-	public Move getNextMove(Board board) {
-		Move nextMove = new Move();
-
+	protected void makeNextMove(Move move, Board board) {
 		for (Cell[] row : board.rows) {
 			for (Cell cell : row) {
 				if (cell.getNumNotes() == 1) {
@@ -25,13 +23,11 @@ public class NakedSingleSolver extends Solver {
 							break;
 						}
 					}
-					this.addChanges(board, cell, note, nextMove);
-					return nextMove;
+					this.addChanges(board, cell, note, move);
+					return;
 				}
 			}
 		}
-
-		return nextMove;
 	}
 
 	@Override

@@ -10,7 +10,15 @@ public abstract class Solver {
 	
 	public abstract String getName();
 
-	public abstract Move getNextMove(Board board);
+	public Move getNextMove(Board board) {
+		Move move = new Move();
+		this.makeNextMove(move, board);
+		move.difficulty = this.getDifficulty();
+		
+		return move;
+	}
+	
+	protected abstract void makeNextMove(Move move, Board board);
 
 	public abstract int getDifficulty();
 

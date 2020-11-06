@@ -18,8 +18,7 @@ public class XYChainSolver extends Solver {
 	}
 
 	@Override
-	public Move getNextMove(Board board) {
-		Move nextMove = new Move();
+	protected void makeNextMove(Move move, Board board) {
 		List<Cell> bivalueCells = new ArrayList<Cell>();
 		for (Cell[] row : board.rows) {
 			for (Cell cell : row) {
@@ -34,14 +33,12 @@ public class XYChainSolver extends Solver {
 		for (Cell cell : bivalueCells) {
 			List<Cell> chain = new ArrayList<Cell>();
 			chain.add(cell);
-			this.followChain(chain, bivalueCells, -1, board, nextMove, changes, bestChain);
+			this.followChain(chain, bivalueCells, -1, board, move, changes, bestChain);
 		}
 
 		for (Change change : changes) {
-			nextMove.addChange(change);
+			move.addChange(change);
 		}
-
-		return nextMove;
 	}
 
 	private void followChain(List<Cell> chain, List<Cell> cells, int lastOverlap, Board board, Move move,

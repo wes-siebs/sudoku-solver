@@ -24,7 +24,8 @@ public class Frame implements KeyListener {
 	private boolean[] show;
 	private boolean showAll;
 
-	private static final int SIZE = 400;
+	private static final int WIDTH = 600;
+	private static final int HEIGHT = 800;
 	private static final int OFFSET_X = 8;
 	private static final int OFFSET_Y = 31;
 
@@ -38,12 +39,12 @@ public class Frame implements KeyListener {
 
 		this.frame = new JFrame("Sudoku Solver");
 
-		this.frame.setSize(SIZE + OFFSET_X * 2, SIZE + OFFSET_Y + OFFSET_X);
-		this.frame.getContentPane().setSize(SIZE, SIZE);
+		this.frame.setSize(WIDTH + OFFSET_X * 2, HEIGHT + OFFSET_Y + OFFSET_X);
+		this.frame.getContentPane().setSize(WIDTH, HEIGHT);
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.frame.setResizable(false);
 
-		this.img = new BufferedImage(SIZE, SIZE, BufferedImage.TYPE_INT_ARGB);
+		this.img = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
 		this.g = (Graphics2D) this.img.getGraphics();
 
 		this.frame.addKeyListener(this);
@@ -52,54 +53,64 @@ public class Frame implements KeyListener {
 	}
 
 	public void draw(Board board) {
-		int[] boxPos = new int[9];
-		for (int i = 0; i < boxPos.length; i++) {
-			boxPos[i] = i * (SIZE - 40) / 9;
-		}
-
 		this.g.setColor(Color.WHITE);
-		this.g.fillRect(0, 0, SIZE, SIZE);
+		this.g.fillRect(0, 0, WIDTH, HEIGHT);
+
+		this.drawPuzzle(20, 20, WIDTH - 40, board);
+		this.drawGraph(20, WIDTH, WIDTH - 40, this.puzzle.getChart());
+
+		this.frame.getGraphics().drawImage(this.img, OFFSET_X, OFFSET_Y, null);
+	}
+
+	private void drawPuzzle(int x, int y, int size, Board board) {
+		int[] boxPos = new int[27];
+		for (int i = 0; i < boxPos.length; i++) {
+			boxPos[i] = i * size / 27;
+		}
 
 		Cell[][] cells = board.rows;
 		this.g.setColor(Color.LIGHT_GRAY);
-		for (int i = 0; i < 9; i++) {
-			for (int j = 0; j < 9; j++) {
-				for (int ii = 0; ii < 9; ii++) {
-					if (!this.show[ii]) {
-						continue;
-					}
-					if (cells[i][j].notes[ii + 1]) {
-						this.g.fillRect(20 + boxPos[j] + (ii % 3) * (SIZE - 40) / 27,
-								20 + boxPos[i] + (ii / 3) * (SIZE - 40) / 27, (SIZE - 40) / 27, (SIZE - 40) / 27);
+		for (int note = 0; note < 9; note++) {
+			if (!this.show[note]) {
+				continue;
+			}
+			for (int i = 0; i < 9; i++) {
+				int yy = y + boxPos[3 * i + note / 3];
+				for (int j = 0; j < 9; j++) {
+					int xx = x + boxPos[3 * j + note % 3];
+					if (cells[i][j].notes[note + 1]) {
+						this.g.fillRect(xx, yy, boxPos[1], boxPos[1]);
 					}
 				}
 			}
 		}
 
 		this.g.setColor(Color.BLACK);
-		this.g.setStroke(new BasicStroke(2));
-		this.g.drawRect(20, 20, SIZE - 40, SIZE - 40);
+		this.g.setStroke(new BasicStroke(3));
+		this.g.drawRect(x, y, size, size);
 		for (int i = 1; i < 3; i++) {
-			this.g.drawLine(20, 20 + boxPos[i * 3], SIZE - 20, 20 + boxPos[i * 3]);
-			this.g.drawLine(20 + boxPos[i * 3], 20, 20 + boxPos[i * 3], SIZE - 20);
+			this.g.drawLine(x, y + boxPos[i * 9], x + size, y + boxPos[i * 9]);
+			this.g.drawLine(x + boxPos[i * 9], y, x + boxPos[i * 9], y + size);
 		}
 		this.g.setStroke(new BasicStroke(1));
 		for (int i = 1; i < 9; i++) {
-			this.g.drawLine(20, 20 + boxPos[i], SIZE - 20, 20 + boxPos[i]);
-			this.g.drawLine(20 + boxPos[i], 20, 20 + boxPos[i], SIZE - 20);
+			this.g.drawLine(x, y + boxPos[i * 3], x + size, y + boxPos[i * 3]);
+			this.g.drawLine(x + boxPos[i * 3], y, x + boxPos[i * 3], y + size);
 		}
 
 		for (Cell[] row : cells) {
 			for (Cell cell : row) {
 				if (cell.value > 0) {
-					this.g.drawString(cell.toString(), 40 + boxPos[cell.column], 40 + boxPos[cell.row]);
+					this.g.drawString(cell.toString(), x + 20 + boxPos[cell.column * 3], y + 20 + boxPos[cell.row * 3]);
 				}
 			}
 		}
-
-		this.frame.getGraphics().drawImage(this.img, OFFSET_X, OFFSET_Y, null);
 	}
 
+	private void drawGraph(int x, int y, int size, int[] vals) {
+		
+	}
+	
 	@Override
 	public void keyTyped(KeyEvent e) {
 	}

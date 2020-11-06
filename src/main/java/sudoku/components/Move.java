@@ -6,9 +6,11 @@ import java.util.List;
 public class Move {
 
 	public List<Change> changeList;
+	public int difficulty;
 
 	public Move() {
 		this.changeList = new ArrayList<Change>();
+		this.difficulty = 0;
 	}
 
 	public void addChange(Change change) {

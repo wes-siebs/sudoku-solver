@@ -11,29 +11,25 @@ import main.java.sudoku.components.NoteChange;
 
 public abstract class HiddenTupleSolver extends Solver {
 
-	protected Move getNextMove(Board board, int tupleSize) {
-		Move nextMove = new Move();
-
+	protected void makeNextMove(Move move, Board board, int tupleSize) {
 		int[][] tuples = Utilities.nCkTuples(board.rows.length, tupleSize, 1);
 
 		for (int[] tuple : tuples) {
 			for (int i = 0; i < board.rows.length; i++) {
-				this.checkHouse(board.rows[i], tuple, nextMove);
-				if (!nextMove.isEmpty()) {
-					return nextMove;
+				this.checkHouse(board.rows[i], tuple, move);
+				if (!move.isEmpty()) {
+					return;
 				}
-				this.checkHouse(board.columns[i], tuple, nextMove);
-				if (!nextMove.isEmpty()) {
-					return nextMove;
+				this.checkHouse(board.columns[i], tuple, move);
+				if (!move.isEmpty()) {
+					return;
 				}
-				this.checkHouse(board.boxes[i], tuple, nextMove);
-				if (!nextMove.isEmpty()) {
-					return nextMove;
+				this.checkHouse(board.boxes[i], tuple, move);
+				if (!move.isEmpty()) {
+					return;
 				}
 			}
 		}
-
-		return nextMove;
 	}
 
 	private void checkHouse(Cell[] house, int[] tuple, Move move) {
