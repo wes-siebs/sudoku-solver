@@ -36,7 +36,7 @@ public class NakedSingleSolver extends Solver {
 
 	@Override
 	public int getDifficulty() {
-		return 1;
+		return 0;
 	}
 
 }

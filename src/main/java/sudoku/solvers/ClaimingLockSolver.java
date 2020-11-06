@@ -63,7 +63,7 @@ public class ClaimingLockSolver extends Solver {
 	
 	@Override
 	public int getDifficulty() {
-		return 3;
+		return 30;
 	}
 
 }

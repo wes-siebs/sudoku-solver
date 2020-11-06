@@ -168,7 +168,7 @@ public class SimpleColoringSolver extends Solver {
 
 	@Override
 	public int getDifficulty() {
-		return 6;
+		return 60;
 	}
 
 }

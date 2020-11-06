@@ -50,7 +50,7 @@ public class Puzzle {
 
 		if (this.isSolved()) {
 			System.out.println("Puzzle was solved.");
-			System.out.println(difficulty + " stars");
+			System.out.println(difficulty + " points");
 		} else {
 			System.out.println("Puzzle was not solved.");
 		}
@@ -62,7 +62,7 @@ public class Puzzle {
 
 			if (!nextMove.isEmpty()) {
 				System.out.println(solver.getName());
-				this.difficulty = Math.max(this.difficulty, solver.getDifficulty());
+				this.difficulty += solver.getDifficulty();
 				return nextMove;
 			}
 		}

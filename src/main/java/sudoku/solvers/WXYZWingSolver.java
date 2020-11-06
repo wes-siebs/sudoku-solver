@@ -131,7 +131,7 @@ public class WXYZWingSolver extends Solver {
 
 	@Override
 	public int getDifficulty() {
-		return 10;
+		return 300;
 	}
 
 }

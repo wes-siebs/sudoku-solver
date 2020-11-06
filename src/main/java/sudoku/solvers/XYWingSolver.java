@@ -100,7 +100,7 @@ public class XYWingSolver extends Solver {
 
 	@Override
 	public int getDifficulty() {
-		return 7;
+		return 75;
 	}
 
 }

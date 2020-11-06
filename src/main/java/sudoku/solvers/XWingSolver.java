@@ -17,7 +17,7 @@ public class XWingSolver extends FishSolver {
 
 	@Override
 	public int getDifficulty() {
-		return 4;
+		return 40;
 	}
 
 }

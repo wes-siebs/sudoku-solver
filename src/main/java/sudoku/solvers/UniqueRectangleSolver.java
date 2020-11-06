@@ -73,7 +73,7 @@ public class UniqueRectangleSolver extends Solver {
 
 	@Override
 	public int getDifficulty() {
-		return 5;
+		return 200;
 	}
 
 }

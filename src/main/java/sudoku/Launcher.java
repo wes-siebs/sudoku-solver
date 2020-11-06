@@ -8,7 +8,7 @@ public class Launcher {
 
 	public static void main(String[] args) {
 		Solver[] solvers = SolverList.getInstance().solvers;
-		Puzzle puzzle = new Puzzle("resources/test/EmptyRectangle", solvers);
+		Puzzle puzzle = new Puzzle("resources/10star.txt", solvers);
 		Frame frame = new Frame(puzzle);
 
 		while (true) {

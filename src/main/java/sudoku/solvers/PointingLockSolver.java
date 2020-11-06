@@ -70,7 +70,7 @@ public class PointingLockSolver extends Solver {
 
 	@Override
 	public int getDifficulty() {
-		return 3;
+		return 30;
 	}
 
 }

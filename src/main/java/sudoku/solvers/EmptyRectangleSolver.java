@@ -170,7 +170,7 @@ public class EmptyRectangleSolver extends Solver {
 
 	@Override
 	public int getDifficulty() {
-		return 10;
+		return 400;
 	}
 
 }

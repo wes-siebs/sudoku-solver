@@ -17,7 +17,7 @@ public class SwordfishSolver extends FishSolver {
 
 	@Override
 	public int getDifficulty() {
-		return 5;
+		return 80;
 	}
 
 }

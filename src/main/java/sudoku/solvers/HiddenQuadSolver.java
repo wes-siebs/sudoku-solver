@@ -17,7 +17,7 @@ public class HiddenQuadSolver extends HiddenTupleSolver {
 
 	@Override
 	public int getDifficulty() {
-		return 4;
+		return 25;
 	}
 
 }

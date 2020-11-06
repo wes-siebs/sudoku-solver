@@ -17,7 +17,7 @@ public class JellyfishSolver extends FishSolver {
 
 	@Override
 	public int getDifficulty() {
-		return 7;
+		return 150;
 	}
 
 }

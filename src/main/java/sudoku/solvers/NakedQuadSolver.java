@@ -17,7 +17,7 @@ public class NakedQuadSolver extends NakedTupleSolver {
 
 	@Override
 	public int getDifficulty() {
-		return 3;
+		return 20;
 	}
 
 }

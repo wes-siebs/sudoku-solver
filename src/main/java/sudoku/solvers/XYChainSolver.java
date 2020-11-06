@@ -118,7 +118,7 @@ public class XYChainSolver extends Solver {
 
 	@Override
 	public int getDifficulty() {
-		return 9;
+		return 150;
 	}
 
 }

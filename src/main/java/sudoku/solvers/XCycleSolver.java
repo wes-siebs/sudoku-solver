@@ -95,7 +95,7 @@ public class XCycleSolver extends Solver {
 
 	@Override
 	public int getDifficulty() {
-		return 9;
+		return 125;
 	}
 
 }
