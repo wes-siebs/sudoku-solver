@@ -1,36 +1,23 @@
 package main.java.sudoku.solvers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import main.java.sudoku.components.Board;
 import main.java.sudoku.components.Cell;
 
-public class XCycle {
+public class XCycle extends Chain {
 	
 	public Board board;
 	public int note;
-	public Cell start;
-	public Cell end;
-	public List<Cell> chain;
 	
 	public XCycle(Board board, int note, Cell start) {
+		super(start);
 		this.board = board;
 		this.note = note;
-		this.start = start;
-		this.end = start;
-		this.chain = new ArrayList<>();
-		this.chain.add(start);
 	}
 	
 	private XCycle(XCycle cycle, Cell end) {
+		super(cycle.chain, end);
 		this.board = cycle.board;
 		this.note = cycle.note;
-		this.start = cycle.start;
-		this.end = end;
-		this.chain = new ArrayList<>();
-		this.chain.addAll(cycle.chain);
-		this.chain.add(end);
 	}
 	
 	public XCycle tryAddCell(Cell cell) {

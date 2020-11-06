@@ -1,7 +1,9 @@
 package main.java.sudoku.solvers;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import main.java.sudoku.Utilities;
 import main.java.sudoku.components.Board;
@@ -28,84 +30,61 @@ public class XYChainSolver extends Solver {
 			}
 		}
 
-		List<Change> changes = new ArrayList<>();
-		List<Cell> bestChain = new ArrayList<>();
+		Queue<XYChain> chains = new LinkedList<>();
 		for (Cell cell : bivalueCells) {
-			List<Cell> chain = new ArrayList<Cell>();
-			chain.add(cell);
-			this.followChain(chain, bivalueCells, -1, board, changes, bestChain);
+			chains.add(new XYChain(cell, board));
 		}
 
-		for (Change change : changes) {
-			move.addChange(change);
-		}
+		XYChain bestChain = null;
+		List<Change> bestChanges = new ArrayList<>();
+		while (!chains.isEmpty()) {
+			XYChain chain = chains.poll();
 
-		if (!bestChain.isEmpty()) {
-			String desc = this.getName() + ": " + bestChain.get(0).coordString();
-			for (int i = 1; i < bestChain.size(); i++) {
-				desc += " <--> " + bestChain.get(i).coordString();
-			}
-			move.description = desc;
-		}
-	}
-
-	private void followChain(List<Cell> chain, List<Cell> cells, int lastOverlap, Board board, List<Change> bestChanges,
-			List<Cell> bestChain) {
-		if (bestChain.size() > 0 && chain.size() > bestChain.size()) {
-			return;
-		}
-
-		Cell link = chain.get(chain.size() - 1);
-
-		for (Cell cell : cells) {
-			if (chain.contains(cell)) {
+			if (bestChain != null && bestChain.size() == chain.size()) {
 				continue;
 			}
 
-			if (cell.canSee(link)) {
-				int overlap = Utilities.unfold(cell.getIntNotes() & link.getIntNotes());
-				if (overlap != 0 && overlap != lastOverlap) {
-					List<Cell> newChain = new ArrayList<>();
-					newChain.addAll(chain);
-					newChain.add(cell);
-
-					if (newChain.size() > 2) {
-						List<Change> changes = this.tryPinch(newChain, board);
-						if (!changes.isEmpty()) {
-							if (bestChanges.size() == 0 || bestChain.size() > newChain.size()) {
-								bestChain.clear();
-								bestChain.addAll(newChain);
-								bestChanges.clear();
-								bestChanges.addAll(changes);
-							}
+			for (Cell cell : bivalueCells) {
+				XYChain newChain = chain.tryAddCell(cell);
+				if (newChain != null) {
+					List<Change> changes = this.tryPinch(newChain);
+					if (!changes.isEmpty()) {
+						if (changes.size() > bestChanges.size()) {
+							bestChanges = changes;
+							bestChain = newChain;
 						}
+					} else if (bestChanges.isEmpty()) {
+						chains.add(newChain);
 					}
-
-					followChain(newChain, cells, overlap, board, bestChanges, bestChain);
 				}
 			}
 		}
+
+		if (!bestChanges.isEmpty()) {
+			for (Change change : bestChanges) {
+				move.addChange(change);
+			}
+
+			move.description = this.getName() + ": " + bestChain.toString();
+		}
 	}
 
-	private List<Change> tryPinch(List<Cell> chain, Board board) {
+	private List<Change> tryPinch(XYChain chain) {
 		List<Change> changes = new ArrayList<>();
 
-		Cell root = chain.get(0);
-		Cell base = chain.get(1);
-		Cell stem = chain.get(chain.size() - 2);
-		Cell leaf = chain.get(chain.size() - 1);
+		Cell base = chain.chain.get(1);
+		Cell stem = chain.chain.get(chain.size() - 2);
 
-		int overlap1 = root.getIntNotes() - (base.getIntNotes() & root.getIntNotes());
-		int overlap2 = leaf.getIntNotes() - (stem.getIntNotes() & leaf.getIntNotes());
+		int overlap1 = chain.start.getIntNotes() - (base.getIntNotes() & chain.start.getIntNotes());
+		int overlap2 = chain.end.getIntNotes() - (stem.getIntNotes() & chain.end.getIntNotes());
 
 		if (overlap1 == overlap2) {
 			int toRemove = Utilities.unfold(overlap1);
-			for (Cell[] row : board.rows) {
-				for (Cell check : row) {
-					if (check.notes[toRemove]) {
-						if (check.canSee(root) && check.canSee(leaf) && !chain.contains(check)) {
-							changes.add(new NoteChange(check, toRemove));
-						}
+
+			for (Cell cell : chain.getCandidates()) {
+				if (cell.notes[toRemove]) {
+					if (cell.canSee(chain.start) && cell.canSee(chain.end) && !chain.chain.contains(cell)) {
+						changes.add(new NoteChange(cell, toRemove));
 					}
 				}
 			}

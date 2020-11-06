@@ -18,9 +18,9 @@ public class XYChainSolverTest extends SolverTest {
 		assertNotNull(move);
 		assertEquals(3, move.changeList.size());
 
-		int[] rows = { 0, 2, 2 };
-		int[] columns = { 2, 6, 8 };
-		int[] values = { 5, 5, 5 };
+		int[] rows = { 2, 6, 7 };
+		int[] columns = { 1, 0, 0 };
+		int[] values = { 6, 6, 6 };
 
 		for (int i = 0; i < rows.length; i++) {
 			if (!this.containsNoteChange(move, rows[i], columns[i], values[i])) {
