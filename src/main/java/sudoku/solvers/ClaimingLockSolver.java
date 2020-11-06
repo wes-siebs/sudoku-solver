@@ -23,7 +23,7 @@ public class ClaimingLockSolver extends Solver {
 	}
 
 	private boolean checkHouses(Board board, Cell[][] houses, Move move) {
-		for (int i = 0; i < houses.length; i++) {
+		for (int i = 1; i <= houses.length; i++) {
 			for (Cell[] house : houses) {
 				List<Cell> candidates = new ArrayList<>();
 				for (Cell cell : house) {
@@ -35,8 +35,10 @@ public class ClaimingLockSolver extends Solver {
 					int box = candidates.get(0).box;
 					
 					boolean sameBox = true;
-					for (int j = 1; j < candidates.size(); j++) {
-						if (candidates.get(j).box != box) {
+					String desc = this.getName() + " on " + i + " at ";
+					for (Cell candidate : candidates) {
+						desc += candidate.coordString();
+						if (candidate.box != box) {
 							sameBox = false;
 							break;
 						}
@@ -48,6 +50,7 @@ public class ClaimingLockSolver extends Solver {
 							}
 						}
 						if (!move.isEmpty()) {
+							move.description = desc;
 							return false;
 						}
 					}

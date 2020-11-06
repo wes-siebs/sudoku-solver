@@ -49,6 +49,15 @@ public class XYZWingSolver extends Solver {
 						}
 
 						if (!move.isEmpty()) {
+							String desc = this.getName() + " on ";
+							for (int note = 1; note <= 9; note++) {
+								if (key.notes[note]) {
+									desc += note;
+								}
+							}
+							desc += "\n\tKey: " + key.coordString();
+							desc += "\n\tPincers: " + pincers.get(i).coordString() + pincers.get(j).coordString();	
+							move.description = desc;
 							return;
 						}
 					}

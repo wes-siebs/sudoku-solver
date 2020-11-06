@@ -30,30 +30,50 @@ public class UniqueRectangleSolver extends Solver {
 				}
 
 				int twoCount = 0;
+				boolean valid = true;
 				for (int i = 0; i < 4; i++) {
 					notes[i] = cells[i].getIntNotes();
 					if (cells[i].value != 0) {
-						twoCount = 4;
+						valid = false;
+						break;
 					} else if (cells[i].getNumNotes() == 2) {
 						twoCount++;
 					}
 				}
-				if (twoCount != 3) {
-					continue;
-				}
+				if (valid && twoCount >= 3) {
+					Cell good = cells[0];
+					Cell bad = cells[3];
+					if (notes[0] == notes[1] && notes[1] == notes[2]) {
+						subtractNotes(cells[3], cells[0], move);
+					} else if (notes[0] == notes[1] && notes[1] == notes[3]) {
+						subtractNotes(cells[2], cells[0], move);
+						good = cells[0];
+						bad = cells[2];
+					} else if (notes[0] == notes[2] && notes[2] == notes[3]) {
+						subtractNotes(cells[1], cells[0], move);
+						good = cells[0];
+						bad = cells[1];
+					} else if (notes[1] == notes[2] && notes[2] == notes[3]) {
+						subtractNotes(cells[0], cells[1], move);
+						good = cells[1];
+						bad = cells[0];
+					}
 
-				if (notes[0] == notes[1] && notes[1] == notes[2]) {
-					subtractNotes(cells[3], cells[0], move);
-				} else if (notes[0] == notes[1] && notes[1] == notes[3]) {
-					subtractNotes(cells[2], cells[0], move);
-				} else if (notes[0] == notes[2] && notes[2] == notes[3]) {
-					subtractNotes(cells[1], cells[0], move);
-				} else if (notes[1] == notes[2] && notes[2] == notes[3]) {
-					subtractNotes(cells[0], cells[1], move);
-				}
-
-				if (!move.isEmpty()) {
-					return;
+					if (!move.isEmpty()) {
+						String desc = this.getName() + " on ";
+						for (int note = 1; note < good.notes.length; note++) {
+							if (good.notes[note]) {
+								desc += note;
+							}
+						}
+						desc += " at ";
+						for (Cell cell : cells) {
+							desc += cell.coordString();
+						}
+						desc += " (remove from " + bad.coordString() + ")";
+						move.description = desc;
+						return;
+					}
 				}
 			}
 		}

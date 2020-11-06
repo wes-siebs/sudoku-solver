@@ -35,14 +35,8 @@ public class XCycle {
 	
 	public XCycle tryAddCell(Cell cell) {
 		if (this.chain.contains(cell)) {
-			if (this.chain.size() < 3) {
-				return null;
-			} else if (this.start != cell) {
-				return null;
-			}
-		}
-		
-		if (this.chain.size() % 2 == 0) {
+			return null;
+		} else if (this.chain.size() % 2 == 0) {
 			if (this.hasWeakLink(this.end, cell)) {
 				return new XCycle(this, cell);
 			}
@@ -53,10 +47,6 @@ public class XCycle {
 		}
 		
 		return null;
-	}
-	
-	public boolean loops() {
-		return this.start == this.end;
 	}
 	
 	public boolean pinches(Cell cell) {

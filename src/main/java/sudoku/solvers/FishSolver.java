@@ -20,12 +20,12 @@ public abstract class FishSolver extends Solver {
 	}
 
 	private void checkHouses(Cell[][] houses, Cell[][] crossHouses, Move move, int tupleSize) {
-		for (int i = 0; i < houses.length; i++) {
+		for (int note = 1; note <= houses.length; note++) {
 			List<Cell[]> candidates = new ArrayList<>();
 			for (Cell[] house : houses) {
 				int count = 0;
 				for (Cell cell : house) {
-					if (cell.notes[i]) {
+					if (cell.notes[note]) {
 						count++;
 					}
 				}
@@ -42,31 +42,36 @@ public abstract class FishSolver extends Solver {
 			for (int tuple[] : tuples) {
 				List<Cell> intersections = new ArrayList<>();
 				List<Integer> intersectionLocs = new ArrayList<>();
-				for (int l = 0; l < houses.length; l++) {
+				for (int i = 0; i < houses.length; i++) {
 					boolean add = false;
 					for (int pos : tuple) {
-						if (candidates.get(pos)[l].notes[i]) {
+						if (candidates.get(pos)[i].notes[note]) {
 							add = true;
 							break;
 						}
 					}
 					if (add) {
-						intersectionLocs.add(l);
+						intersectionLocs.add(i);
 						for (int pos : tuple) {
-							intersections.add(candidates.get(pos)[l]);
+							intersections.add(candidates.get(pos)[i]);
 						}
 					}
 				}
 				if (intersectionLocs.size() == tupleSize) {
 					for (Integer intersection : intersectionLocs) {
-						for (int l = 0; l < crossHouses.length; l++) {
-							Cell changeCell = crossHouses[intersection][l];
+						for (int i = 0; i < crossHouses.length; i++) {
+							Cell changeCell = crossHouses[intersection][i];
 							if (!intersections.contains(changeCell)) {
-								move.addChange(new NoteChange(changeCell, i));
+								move.addChange(new NoteChange(changeCell, note));
 							}
 						}
 					}
 					if (!move.isEmpty()) {
+						String desc = this.getName() + " on " + note + " at ";
+						for (Cell cell : intersections) {
+							desc += cell.coordString();
+						}
+						move.description = desc;
 						return;
 					}
 				}

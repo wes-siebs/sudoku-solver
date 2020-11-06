@@ -72,7 +72,11 @@ public class Puzzle {
 			Move nextMove = solver.getNextMove(this.board);
 
 			if (!nextMove.isEmpty()) {
-				System.out.println(solver.getName());
+				if (nextMove.description.isEmpty()) {
+					System.out.println(solver.getName());
+				} else {
+					System.out.println(nextMove.description);
+				}
 				this.difficulty += solver.getDifficulty();
 				return nextMove;
 			}

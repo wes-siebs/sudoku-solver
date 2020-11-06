@@ -41,6 +41,7 @@ public abstract class HiddenTupleSolver extends Solver {
 				if (cell.notes[tuple[i]]) {
 					add = true;
 					used[i] = true;
+					break;
 				}
 			}
 			if (add) {
@@ -76,6 +77,16 @@ public abstract class HiddenTupleSolver extends Solver {
 					}
 				}
 			}
+			
+			String desc = this.getName() + " on ";
+			for (int note : tuple) {
+				desc += note;
+			}
+			desc += " at ";
+			for (Cell cell : cells) {
+				desc += cell.coordString();
+			}
+			move.description = desc;
 		}
 	}
 

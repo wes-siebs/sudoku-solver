@@ -12,7 +12,7 @@ import main.java.sudoku.solvers.WXYZWingSolver;
 public class WXYZWingSolverTest extends SolverTest {
 
 	@Test
-	public void testXYChainSolver() {
+	public void testWXYZWingSolver() {
 		Move move = this.getMove("resources/test/WXYZWing", new WXYZWingSolver());
 
 		assertNotNull(move);

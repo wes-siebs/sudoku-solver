@@ -38,6 +38,11 @@ public class EmptyRectangleSolver extends Solver {
 
 					Cell cell = board.rows[pos[0]][pos[1]];
 					if (cell.notes[note]) {
+						String desc = "Empty Rectangle on " + note;
+						desc += "\n\tERI: " + ERI.coordString();
+						desc += "\n\tPair: " + chain[0].coordString() + chain[1].coordString();
+						desc += "\n\tRemoves " + note + " from " + cell.coordString();
+						move.description = desc;
 						move.addChange(new NoteChange(cell, note));
 						return;
 					}

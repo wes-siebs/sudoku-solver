@@ -39,16 +39,19 @@ public class HiddenSingleSolver extends Solver {
 
 				if (rowCount == 1) {
 					this.addChanges(board, rowCell, i, move);
+					move.description = "Hidden Single at " + rowCell.coordString();
 					return;
 				}
 
 				if (columnCount == 1) {
 					this.addChanges(board, columnCell, i, move);
+					move.description = "Hidden Single at " + columnCell.coordString();
 					return;
 				}
 
 				if (boxCount == 1) {
 					this.addChanges(board, boxCell, i, move);
+					move.description = "Hidden Single at " + boxCell.coordString();
 					return;
 				}
 			}

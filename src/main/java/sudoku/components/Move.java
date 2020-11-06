@@ -7,6 +7,7 @@ public class Move {
 
 	public List<Change> changeList;
 	public int difficulty;
+	public String description = "";
 
 	public Move() {
 		this.changeList = new ArrayList<Change>();

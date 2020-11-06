@@ -61,6 +61,15 @@ public abstract class NakedTupleSolver extends Solver {
 			}
 			
 			if (!move.isEmpty()) {
+				String desc = this.getName() + " on ";
+				for (int note : notes) {
+					desc += note;
+				}
+				desc += " at ";
+				for (int j : tuple) {
+					desc += house[j].coordString();
+				}
+				move.description = desc;
 				return;
 			}
 		}

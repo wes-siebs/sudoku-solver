@@ -33,16 +33,24 @@ public class XYChainSolver extends Solver {
 		for (Cell cell : bivalueCells) {
 			List<Cell> chain = new ArrayList<Cell>();
 			chain.add(cell);
-			this.followChain(chain, bivalueCells, -1, board, move, changes, bestChain);
+			this.followChain(chain, bivalueCells, -1, board, changes, bestChain);
 		}
 
 		for (Change change : changes) {
 			move.addChange(change);
 		}
+
+		if (!bestChain.isEmpty()) {
+			String desc = this.getName() + ": " + bestChain.get(0).coordString();
+			for (int i = 1; i < bestChain.size(); i++) {
+				desc += " <--> " + bestChain.get(i).coordString();
+			}
+			move.description = desc;
+		}
 	}
 
-	private void followChain(List<Cell> chain, List<Cell> cells, int lastOverlap, Board board, Move move,
-			List<Change> bestChanges, List<Cell> bestChain) {
+	private void followChain(List<Cell> chain, List<Cell> cells, int lastOverlap, Board board, List<Change> bestChanges,
+			List<Cell> bestChain) {
 		if (bestChain.size() > 0 && chain.size() > bestChain.size()) {
 			return;
 		}
@@ -62,7 +70,7 @@ public class XYChainSolver extends Solver {
 					newChain.add(cell);
 
 					if (newChain.size() > 2) {
-						List<Change> changes = this.tryPinch(newChain, board, move);
+						List<Change> changes = this.tryPinch(newChain, board);
 						if (!changes.isEmpty()) {
 							if (bestChanges.size() == 0 || bestChain.size() > newChain.size()) {
 								bestChain.clear();
@@ -71,22 +79,15 @@ public class XYChainSolver extends Solver {
 								bestChanges.addAll(changes);
 							}
 						}
-						if (!move.isEmpty()) {
-
-							return;
-						}
 					}
 
-					followChain(newChain, cells, overlap, board, move, bestChanges, bestChain);
-					if (!move.isEmpty()) {
-						return;
-					}
+					followChain(newChain, cells, overlap, board, bestChanges, bestChain);
 				}
 			}
 		}
 	}
 
-	private List<Change> tryPinch(List<Cell> chain, Board board, Move move) {
+	private List<Change> tryPinch(List<Cell> chain, Board board) {
 		List<Change> changes = new ArrayList<>();
 
 		Cell root = chain.get(0);

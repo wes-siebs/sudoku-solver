@@ -31,7 +31,7 @@ public class Cell {
 	}
 	
 	public String coordString() {
-		return "(" + (this.row + 1) + "," + (this.column + 1) + ")";
+		return "r" + (this.row + 1) + "c" + (this.column + 1);
 	}
 	
 	public int getNumNotes() {

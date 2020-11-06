@@ -24,6 +24,7 @@ public class NakedSingleSolver extends Solver {
 						}
 					}
 					this.addChanges(board, cell, note, move);
+					move.description = "Naked Single at " + cell.coordString();
 					return;
 				}
 			}

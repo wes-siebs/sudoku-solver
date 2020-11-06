@@ -76,7 +76,7 @@ public class WXYZWingSolver extends Solver {
 									remove = false;
 									break;
 								}
-								if (candidate.notes[unrestricted] && !candidate.canSee(cell)) {
+								if (candidate.notes[unrestricted] && !(candidate.canSee(cell) || candidate == cell)) {
 									remove = false;
 									break;
 								}
@@ -89,6 +89,15 @@ public class WXYZWingSolver extends Solver {
 					}
 
 					if (!move.isEmpty()) {
+						String desc = this.getName() + " on ";
+						for (int note : tuple) {
+							desc += note;
+						}
+						desc += " at ";
+						for (Cell cell : cells) {
+							desc += cell.coordString();
+						}
+						move.description = desc;
 						return;
 					}
 				}
@@ -114,14 +123,15 @@ public class WXYZWingSolver extends Solver {
 				candidates.add(cell);
 			}
 		}
-
-		for (Cell cell1 : candidates) {
-			for (Cell cell2 : candidates) {
-				if (!cell1.canSee(cell2)) {
+		
+		for (int i = 0; i < candidates.size(); i++) {
+			for (int j = i + 1; j < candidates.size(); j++) {
+				if (!candidates.get(i).canSee(candidates.get(j))) {
 					return false;
 				}
 			}
 		}
+		
 		return true;
 	}
 

@@ -17,12 +17,8 @@ public class SimpleColoringSolver extends Solver {
 
 	@Override
 	protected void makeNextMove(Move move, Board board) {
-		for (int i = 1; i <= 9; i++) {
+		for (int i = 1; i <= 9 && move.isEmpty(); i++) {
 			this.checkNotes(board, i, move, this.getChains(board, i));
-
-			if (!move.isEmpty()) {
-				break;
-			}
 		}
 	}
 
@@ -71,17 +67,28 @@ public class SimpleColoringSolver extends Solver {
 			}
 		}
 
+		String desc = this.getName() + " on " + note + ":";
+		desc += "\n\tRed Cells: ";
+		for (Cell cell : redCells) {
+			desc += cell.coordString();
+		}
+		desc += "\n\tBlue Cells: ";
+		for (Cell cell : blueCells) {
+			desc += cell.coordString();
+		}
+		
 		if (this.violatesRule2(redCells)) {
 			for (Cell cell : redCells) {
 				move.addChange(new NoteChange(cell, note));
 			}
-			return;
+			desc += "\n\tViolation of Rule 2: Removing " + note + " from all red cells";
 		} else if (this.violatesRule2(blueCells)) {
 			for (Cell cell : blueCells) {
 				move.addChange(new NoteChange(cell, note));
 			}
-			return;
+			desc += "\n\tViolation of Rule 2: Removing " + note + " from all blue cells";
 		} else {
+			desc += "\n\tViolation of Rule 4: Removing " + note + " from ";
 			for (Cell[] row : board.rows) {
 				for (Cell cell : row) {
 					boolean seesRed = false;
@@ -102,12 +109,17 @@ public class SimpleColoringSolver extends Solver {
 
 					if (seesRed && seesBlue) {
 						move.addChange(new NoteChange(cell, note));
+						if (cell.notes[note]) {
+							desc += cell.coordString();
+						}
 					}
 				}
 			}
 		}
-
-		if (move.isEmpty() && !chains.isEmpty()) {
+		
+		if (!move.isEmpty()) {
+			move.description = desc;
+		} else if (!chains.isEmpty()) {
 			checkNotes(board, note, move, chains);
 		}
 	}

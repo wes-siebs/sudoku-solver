@@ -17,11 +17,11 @@ public class PointingLockSolver extends Solver {
 
 	@Override
 	protected void makeNextMove(Move move, Board board) {
-		for (int i = 0; i < board.boxes.length; i++) {
+		for (int note = 1; note <= board.boxes.length; note++) {
 			for (Cell[] box : board.boxes) {
 				List<Cell> candidates = new ArrayList<>();
 				for (Cell cell : box) {
-					if (cell.notes[i]) {
+					if (cell.notes[note]) {
 						candidates.add(cell);
 					}
 				}
@@ -31,33 +31,39 @@ public class PointingLockSolver extends Solver {
 					
 					boolean sameRow = true;
 					boolean sameColumn = true;
-					for (int j = 1; j < candidates.size(); j++) {
-						if (candidates.get(j).row != row) {
+					for (int i = 1; i < candidates.size(); i++) {
+						if (candidates.get(i).row != row) {
 							sameRow = false;
 						}
-						if (candidates.get(j).column != column) {
+						if (candidates.get(i).column != column) {
 							sameColumn = false;
 						}
 					}
 					if (sameRow) {
-						for (int j = 0; j < board.rows.length; j++) {
-							if (board.rows[row][j].box != box[0].box) {
-								move.addChange(new NoteChange(board.rows[row][j], i));
+						for (int i = 0; i < board.rows.length; i++) {
+							if (board.rows[row][i].box != box[0].box) {
+								move.addChange(new NoteChange(board.rows[row][i], note));
 							}
 						}
-						if (!move.isEmpty()) {
-							return;
+					} else if (sameColumn) {
+						for (int i = 0; i < board.columns.length; i++) {
+							if (board.columns[column][i].box != box[0].box) {
+								move.addChange(new NoteChange(board.columns[column][i], note));
+							}
 						}
+					} else {
+						continue;
 					}
-					if (sameColumn) {
-						for (int j = 0; j < board.columns.length; j++) {
-							if (board.columns[column][j].box != box[0].box) {
-								move.addChange(new NoteChange(board.columns[column][j], i));
-							}
+					
+					if (!move.isEmpty()) {
+						String desc = this.getName() + " on " + note + " at ";
+						
+						for (Cell candidate : candidates) {
+							desc += candidate.coordString();
 						}
-						if (!move.isEmpty()) {
-							return;
-						}
+						
+						move.description = desc;
+						return;
 					}
 				}
 			}

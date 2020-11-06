@@ -60,6 +60,15 @@ public class XYWingSolver extends Solver {
 						}
 						
 						if (!move.isEmpty()) {
+							String desc = this.getName() + " on ";
+							for (int note = 1; note <= 9; note++) {
+								if (key.notes[note] || note == toRemove) {
+									desc += note;
+								}
+							}
+							desc += "\n\tKey: " + key.coordString();
+							desc += "\n\tPincers: " + p1.coordString() + p2.coordString();	
+							move.description = desc;
 							return;
 						}
 					}
