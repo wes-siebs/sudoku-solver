@@ -17,7 +17,7 @@ public class NakedPairSolver extends NakedTupleSolver {
 
 	@Override
 	public int getDifficulty() {
-		return 2;
+		return 20;
 	}
 
 }

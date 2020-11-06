@@ -14,7 +14,6 @@ public class SolverList {
 			new NakedQuadSolver(),
 			new NakedSingleSolver(),
 			new NakedTripleSolver(),
-			new OpenSingleSolver(),
 			new PointingLockSolver(),
 			new SimpleColoringSolver(),
 			new SwordfishSolver(),

@@ -61,7 +61,7 @@ public class HiddenSingleSolver extends Solver {
 
 	@Override
 	public int getDifficulty() {
-		return 2;
+		return 10;
 	}
 
 }

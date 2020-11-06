@@ -17,21 +17,15 @@ public class NakedSingleSolver extends Solver {
 
 		for (Cell[] row : board.rows) {
 			for (Cell cell : row) {
-				int count = 0;
-				int newValue = 0;
-				for (int i = 0; i < cell.notes.length; i++) {
-					if (cell.notes[i]) {
-						if (count == 0) {
-							count = 1;
-							newValue = i;
-						} else {
-							count = 2;
+				if (cell.getNumNotes() == 1) {
+					int note = 0;
+					for (int i = 0; i < cell.notes.length; i++) {
+						if (cell.notes[i]) {
+							note = i;
 							break;
 						}
 					}
-				}
-				if (count == 1) {
-					this.addChanges(board, cell, newValue, nextMove);
+					this.addChanges(board, cell, note, nextMove);
 					return nextMove;
 				}
 			}
