@@ -118,4 +118,12 @@ public class Puzzle {
 		
 		return vals;
 	}
+	
+	public double getProgress() {
+		if (this.moves.size() == this.undoMoves.size()) {
+			return 1;
+		}
+		
+		return 1.0 * this.undoMoves.size() / this.moves.size();
+	}
 }

@@ -57,7 +57,7 @@ public class Frame implements KeyListener {
 		this.g.fillRect(0, 0, WIDTH, HEIGHT);
 
 		this.drawPuzzle(20, 20, WIDTH - 40, board);
-		this.drawGraph(20, WIDTH, WIDTH - 40, this.puzzle.getChart());
+		this.drawGraph(20, WIDTH, WIDTH - 40, HEIGHT - WIDTH - 20, this.puzzle.getChart());
 
 		this.frame.getGraphics().drawImage(this.img, OFFSET_X, OFFSET_Y, null);
 	}
@@ -107,10 +107,45 @@ public class Frame implements KeyListener {
 		}
 	}
 
-	private void drawGraph(int x, int y, int size, int[] vals) {
-		
+	private void drawGraph(int x, int y, int width, int height, int[] vals) {
+		this.g.setColor(Color.BLACK);
+		this.g.setStroke(new BasicStroke(1));
+		int[] adjusted = adjust(vals, height);
+		this.g.setStroke(new BasicStroke(2));
+		for (int i = 1; i < vals.length; i++) {
+			int x1 = x + (i - 1) * width / (vals.length - 1);
+			int x2 = x + i * width / (vals.length - 1);
+			int y1 = y + adjusted[i - 1];
+			int y2 = y + adjusted[i];
+			this.g.drawLine(x1, y1, x2, y2);
+		}
+
+		double progress = this.puzzle.getProgress();
+		if (progress < 1) {
+			this.g.setColor(new Color(0, 255, 0, 100));
+			this.g.fillRect((int) (x + (progress * width)), y, width / vals.length, height);
+		}
+
+		this.g.setColor(Color.BLACK);
+		this.g.setStroke(new BasicStroke(3));
+		this.g.drawRect(x, y, width, height);
 	}
-	
+
+	private int[] adjust(int[] vals, int height) {
+		int max = 10;
+		for (int i = 0; i < vals.length; i++) {
+			if (vals[i] > max) {
+				max = vals[i];
+			}
+		}
+
+		int[] adjusted = new int[vals.length];
+		for (int i = 0; i < vals.length; i++) {
+			adjusted[i] = (int) (0.1 * height + 0.8 * height * (max - vals[i]) / max);
+		}
+		return adjusted;
+	}
+
 	@Override
 	public void keyTyped(KeyEvent e) {
 	}
