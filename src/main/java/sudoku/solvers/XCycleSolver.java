@@ -42,13 +42,22 @@ public class XCycleSolver extends Solver {
 							if (newCycle.chain.size() % 2 == 0) {
 								this.handleDisLoop(newCycle, nextMove);
 							} else {
-								this.handleConLoop(newCycle, nextMove);
+								this.handleConLoop(newCycle, candidates, nextMove);
 							}
 
 							if (!nextMove.isEmpty()) {
 								return nextMove;
 							}
 						} else {
+							for (Cell pinched : candidates) {
+								if (newCycle.pinches(pinched)) {
+									nextMove.addChange(new NoteChange(pinched, note));
+								}
+							}
+							if (!nextMove.isEmpty()) {
+								System.out.println(newCycle.toString());
+								return nextMove;
+							}
 							cycles.add(newCycle);
 						}
 					}
@@ -63,24 +72,22 @@ public class XCycleSolver extends Solver {
 		this.addChanges(cycle.board, cycle.start, cycle.note, move);
 	}
 
-	private void handleConLoop(XCycle cycle, Move move) {
-		for (Cell[] row : cycle.board.rows) {
-			for (Cell cell : row) {
-				if (!cycle.chain.contains(cell)) {
-					boolean zero = false;
-					boolean one = false;
-					for (int i = 1; i < cycle.chain.size(); i++) {
-						if (cycle.chain.get(i).canSee(cell)) {
-							if (i % 2 == 0) {
-								zero = true;
-							} else {
-								one = true;
-							}
+	private void handleConLoop(XCycle cycle, List<Cell> cells, Move move) {
+		for (Cell cell : cells) {
+			if (!cycle.chain.contains(cell)) {
+				boolean zero = false;
+				boolean one = false;
+				for (int i = 1; i < cycle.chain.size(); i++) {
+					if (cycle.chain.get(i).canSee(cell)) {
+						if (i % 2 == 0) {
+							zero = true;
+						} else {
+							one = true;
 						}
 					}
-					if (zero && one) {
-						move.addChange(new NoteChange(cell, cycle.note));
-					}
+				}
+				if (zero && one) {
+					move.addChange(new NoteChange(cell, cycle.note));
 				}
 			}
 		}

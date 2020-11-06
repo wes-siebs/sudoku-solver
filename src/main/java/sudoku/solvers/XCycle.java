@@ -42,7 +42,7 @@ public class XCycle {
 			}
 		}
 		
-		if (chain.size() % 2 == 0) {
+		if (this.chain.size() % 2 == 0) {
 			if (this.hasWeakLink(this.end, cell)) {
 				return new XCycle(this, cell);
 			}
@@ -57,6 +57,17 @@ public class XCycle {
 	
 	public boolean loops() {
 		return this.start == this.end;
+	}
+	
+	public boolean pinches(Cell cell) {
+		if (this.chain.size() < 4 || this.chain.size() % 2 == 1) {
+			return false;
+		} else if (this.chain.contains(cell)) {
+			return false;
+		} else if (this.start.canSee(cell) && this.end.canSee(cell)) {
+			return true;
+		}
+		return false;
 	}
 	
 	private boolean hasStrongLink(Cell c1, Cell c2) {
@@ -97,6 +108,22 @@ public class XCycle {
 		} else {
 			return false;
 		}
+	}
+	
+	@Override
+	public String toString() {
+		String s = this.start.coordString();
+		boolean strong = true;
+		for (int i = 1; i < this.chain.size(); i++) {
+			if (strong) {
+				s += " -s-> ";
+			} else {
+				s += " -w-> ";
+			}
+			strong = !strong;
+			s += this.chain.get(i).coordString();
+		}
+		return s;
 	}
 
 }
