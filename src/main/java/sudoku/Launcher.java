@@ -1,12 +1,14 @@
 package main.java.sudoku;
 
 import main.java.sudoku.components.Puzzle;
+import main.java.sudoku.solvers.Solver;
 import main.java.sudoku.solvers.SolverList;
 
 public class Launcher {
 
 	public static void main(String[] args) {
-		Puzzle puzzle = new Puzzle("resources/test/EmptyRectangle", SolverList.solverList);
+		Solver[] solvers = SolverList.getInstance().solvers;
+		Puzzle puzzle = new Puzzle("resources/test/EmptyRectangle", solvers);
 		Frame frame = new Frame(puzzle);
 
 		while (true) {
