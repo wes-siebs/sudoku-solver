@@ -5,10 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import main.java.sudoku.Utilities;
 import main.java.sudoku.components.Board;
 import main.java.sudoku.components.Cell;
-import main.java.sudoku.components.Change;
 import main.java.sudoku.components.Move;
 import main.java.sudoku.components.NoteChange;
 
@@ -36,7 +34,7 @@ public class XYChainSolver extends Solver {
 		}
 
 		XYChain bestChain = null;
-		List<Change> bestChanges = new ArrayList<>();
+		List<Cell> bestPinch = new ArrayList<>();
 		while (!chains.isEmpty()) {
 			XYChain chain = chains.poll();
 
@@ -47,50 +45,26 @@ public class XYChainSolver extends Solver {
 			for (Cell cell : bivalueCells) {
 				XYChain newChain = chain.tryAddCell(cell);
 				if (newChain != null) {
-					List<Change> changes = this.tryPinch(newChain);
-					if (!changes.isEmpty()) {
-						if (changes.size() > bestChanges.size()) {
-							bestChanges = changes;
+					List<Cell> pinches = newChain.getPinches();
+					if (!pinches.isEmpty()) {
+						if (pinches.size() > bestPinch.size()) {
+							bestPinch = pinches;
 							bestChain = newChain;
 						}
-					} else if (bestChanges.isEmpty()) {
+					} else if (bestPinch.isEmpty()) {
 						chains.add(newChain);
 					}
 				}
 			}
 		}
 
-		if (!bestChanges.isEmpty()) {
-			for (Change change : bestChanges) {
-				move.addChange(change);
+		if (!bestPinch.isEmpty()) {
+			for (Cell cell : bestPinch) {
+				move.addChange(new NoteChange(cell, bestChain.startNote));
 			}
 
 			move.description = this.getName() + ": " + bestChain.toString();
 		}
-	}
-
-	private List<Change> tryPinch(XYChain chain) {
-		List<Change> changes = new ArrayList<>();
-
-		Cell base = chain.chain.get(1);
-		Cell stem = chain.chain.get(chain.size() - 2);
-
-		int overlap1 = chain.start.getIntNotes() - (base.getIntNotes() & chain.start.getIntNotes());
-		int overlap2 = chain.end.getIntNotes() - (stem.getIntNotes() & chain.end.getIntNotes());
-
-		if (overlap1 == overlap2) {
-			int toRemove = Utilities.unfold(overlap1);
-
-			for (Cell cell : chain.getCandidates()) {
-				if (cell.notes[toRemove]) {
-					if (cell.canSee(chain.start) && cell.canSee(chain.end) && !chain.chain.contains(cell)) {
-						changes.add(new NoteChange(cell, toRemove));
-					}
-				}
-			}
-		}
-
-		return changes;
 	}
 
 	@Override
