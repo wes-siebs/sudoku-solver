@@ -6,7 +6,7 @@ import main.java.sudoku.solvers.SolverList;
 public class Launcher {
 
 	public static void main(String[] args) {
-		Puzzle puzzle = new Puzzle("resources/test/XCycle1", SolverList.solverList);
+		Puzzle puzzle = new Puzzle("resources/test/EmptyRectangle", SolverList.solverList);
 		Frame frame = new Frame(puzzle);
 
 		while (true) {
