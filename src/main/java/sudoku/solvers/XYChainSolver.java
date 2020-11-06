@@ -57,7 +57,7 @@ public class XYChainSolver extends Solver {
 				continue;
 			}
 
-			if (cell.canSee(link) && cell != link) {
+			if (cell.canSee(link)) {
 				int overlap = Utilities.unfold(cell.getIntNotes() & link.getIntNotes());
 				if (overlap != 0 && overlap != lastOverlap) {
 					List<Cell> newChain = new ArrayList<>();

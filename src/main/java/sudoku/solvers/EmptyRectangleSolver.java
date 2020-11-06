@@ -30,9 +30,9 @@ public class EmptyRectangleSolver extends Solver {
 					}
 					
 					int[] pos = new int[2];
-					if (ERI.canSee(chain[0]) && ERI.box != chain[0].box) {
+					if (ERI.canSee(chain[0])) {
 						pos = this.getPinch(ERI, chain[0], chain[1]);
-					} else if (ERI.canSee(chain[1]) && ERI.box != chain[1].box) {
+					} else if (ERI.canSee(chain[1])) {
 						pos = this.getPinch(ERI, chain[1], chain[0]);
 					} else {
 						continue;

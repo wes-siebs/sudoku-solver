@@ -92,13 +92,13 @@ public class SimpleColoringSolver extends Solver {
 					boolean seesBlue = false;
 
 					for (Cell red : redCells) {
-						if (cell.canSee(red) && cell != red) {
+						if (cell.canSee(red)) {
 							seesRed = true;
 							break;
 						}
 					}
 					for (Cell blue : blueCells) {
-						if (cell.canSee(blue) && cell != blue) {
+						if (cell.canSee(blue)) {
 							seesBlue = true;
 							break;
 						}

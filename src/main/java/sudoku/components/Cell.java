@@ -53,7 +53,9 @@ public class Cell {
 	}
 	
 	public boolean canSee(Cell cell) {
-		if (this.row == cell.row) {
+		if (this == cell) {
+			return false;
+		} else if (this.row == cell.row) {
 			return true;
 		} else if (this.column == cell.column) {
 			return true;
