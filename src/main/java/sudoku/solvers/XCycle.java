@@ -48,7 +48,7 @@ public class XCycle extends Chain {
 	}
 	
 	private boolean hasStrongLink(Cell c1, Cell c2) {
-		if (c1 == c2 || !c1.notes[this.note] || !c2.notes[this.note]) {
+		if (c1 == c2 || !c1.getNote(this.note) || !c2.getNote(this.note)) {
 			return false;
 		}
 		
@@ -66,13 +66,13 @@ public class XCycle extends Chain {
 	private int numNotes(Cell[] house, int note) {
 		int count = 0;
 		for (Cell cell : house) {
-			count += cell.notes[note] ? 1 : 0;
+			count += cell.getNote(note) ? 1 : 0;
 		}
 		return count;
 	}
 	
 	private boolean hasWeakLink(Cell c1, Cell c2) {
-		if (c1 == c2 || !c1.notes[this.note] || !c2.notes[this.note]) {
+		if (c1 == c2 || !c1.getNote(this.note) || !c2.getNote(this.note)) {
 			return false;
 		}
 		

@@ -32,8 +32,8 @@ public class UniqueRectangleSolver extends Solver {
 				int twoCount = 0;
 				boolean valid = true;
 				for (int i = 0; i < 4; i++) {
-					notes[i] = cells[i].getIntNotes();
-					if (cells[i].value != 0) {
+					notes[i] = cells[i].getNoteValue();
+					if (cells[i].getValue() != 0) {
 						valid = false;
 						break;
 					} else if (cells[i].getNumNotes() == 2) {
@@ -61,8 +61,8 @@ public class UniqueRectangleSolver extends Solver {
 
 					if (!move.isEmpty()) {
 						String desc = this.getName() + " on ";
-						for (int note = 1; note < good.notes.length; note++) {
-							if (good.notes[note]) {
+						for (int note = 1; note < 10; note++) {
+							if (good.getNote(note)) {
 								desc += note;
 							}
 						}
@@ -80,8 +80,8 @@ public class UniqueRectangleSolver extends Solver {
 	}
 
 	private void subtractNotes(Cell a, Cell b, Move move) {
-		for (int i = 0; i < b.notes.length; i++) {
-			if (b.notes[i]) {
+		for (int i = 0; i < 10; i++) {
+			if (b.getNote(i)) {
 				move.addChange(new NoteChange(a, i));
 			}
 		}

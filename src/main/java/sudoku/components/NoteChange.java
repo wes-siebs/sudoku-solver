@@ -9,17 +9,17 @@ public class NoteChange extends Change {
 	public NoteChange(Cell cell, int note) {
 		this.cell = cell;
 		this.note = note;
-		this.oldValue = cell.notes[note];
+		this.oldValue = cell.getNote(note);
 	}
 
 	@Override
 	public void apply() {
-		this.cell.notes[note] = false;
+		this.cell.setNote(note, false);
 	}
 
 	@Override
 	public void unapply() {
-		this.cell.notes[note] = oldValue;
+		this.cell.setNote(note, oldValue);
 	}
 
 	@Override

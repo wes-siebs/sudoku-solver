@@ -27,11 +27,11 @@ public class XYZWingSolver extends Solver {
 				continue;
 			}
 
-			int keyValue = key.getIntNotes();
+			int keyValue = key.getNoteValue();
 			for (int i = 0; i < pincers.size(); i++) {
-				int p1Value = pincers.get(i).getIntNotes();
+				int p1Value = pincers.get(i).getNoteValue();
 				for (int j = i + 1; j < pincers.size(); j++) {
-					int p2Value = pincers.get(j).getIntNotes();
+					int p2Value = pincers.get(j).getNoteValue();
 
 					if ((p1Value | p2Value) == keyValue) {
 						int toRemove = Utilities.unfold(p1Value & p2Value);
@@ -51,7 +51,7 @@ public class XYZWingSolver extends Solver {
 						if (!move.isEmpty()) {
 							String desc = this.getName() + " on ";
 							for (int note = 1; note <= 9; note++) {
-								if (key.notes[note]) {
+								if (key.getNote(note)) {
 									desc += note;
 								}
 							}
@@ -82,13 +82,13 @@ public class XYZWingSolver extends Solver {
 
 	private List<Cell> getPincers(Board board, Cell key) {
 		List<Cell> pincers = new ArrayList<>();
-		int keyValue = key.getIntNotes();
+		int keyValue = key.getNoteValue();
 
 		for (Cell[] row : board.rows) {
 			for (Cell cell : row) {
 				if (cell.getNumNotes() == 2) {
 					if (key.canSee(cell)) {
-						if ((keyValue | cell.getIntNotes()) == keyValue) {
+						if ((keyValue | cell.getNoteValue()) == keyValue) {
 							pincers.add(cell);
 						}
 					}

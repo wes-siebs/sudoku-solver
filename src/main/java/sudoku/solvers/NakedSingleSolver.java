@@ -17,8 +17,8 @@ public class NakedSingleSolver extends Solver {
 			for (Cell cell : row) {
 				if (cell.getNumNotes() == 1) {
 					int note = 0;
-					for (int i = 0; i < cell.notes.length; i++) {
-						if (cell.notes[i]) {
+					for (int i = 0; i < 10; i++) {
+						if (cell.getNote(i)) {
 							note = i;
 							break;
 						}

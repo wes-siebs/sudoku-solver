@@ -28,10 +28,10 @@ public class WXYZWingSolver extends Solver {
 
 			for (Cell[] row : board.rows) {
 				for (Cell cell : row) {
-					if (cell.value != 0) {
+					if (cell.getValue() != 0) {
 						continue;
 					}
-					int cellValue = cell.getIntNotes();
+					int cellValue = cell.getNoteValue();
 					if ((cellValue & value) <= value) {
 						candidates.add(cell);
 					}
@@ -76,7 +76,7 @@ public class WXYZWingSolver extends Solver {
 									remove = false;
 									break;
 								}
-								if (candidate.notes[unrestricted] && !(candidate.canSee(cell) || candidate == cell)) {
+								if (candidate.getNote(unrestricted) && !(candidate.canSee(cell) || candidate == cell)) {
 									remove = false;
 									break;
 								}
@@ -107,10 +107,15 @@ public class WXYZWingSolver extends Solver {
 		}
 	}
 
+	private Cell[] checkHouse(Cell[] house, int[] tuple) {
+		Cell[] cells = new Cell[3];
+		return cells;
+	}
+	
 	private boolean areValid(Cell[] cells, int value) {
 		int cellValue = 0;
 		for (Cell cell : cells) {
-			cellValue |= cell.getIntNotes();
+			cellValue |= cell.getNoteValue();
 		}
 
 		return cellValue == value;
@@ -119,7 +124,7 @@ public class WXYZWingSolver extends Solver {
 	private boolean isRestricted(Cell[] cells, int note) {
 		List<Cell> candidates = new ArrayList<>();
 		for (Cell cell : cells) {
-			if (cell.notes[note]) {
+			if (cell.getNote(note)) {
 				candidates.add(cell);
 			}
 		}

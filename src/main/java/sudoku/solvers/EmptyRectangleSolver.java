@@ -37,7 +37,7 @@ public class EmptyRectangleSolver extends Solver {
 					}
 
 					Cell cell = board.rows[pos[0]][pos[1]];
-					if (cell.notes[note]) {
+					if (cell.getNote(note)) {
 						String desc = "Empty Rectangle on " + note;
 						desc += "\n\tERI: " + ERI.coordString();
 						desc += "\n\tPair: " + chain[0].coordString() + chain[1].coordString();
@@ -64,10 +64,10 @@ public class EmptyRectangleSolver extends Solver {
 				int noteCount = 0;
 				for (int row = yoff; row < yoff + 3; row++) {
 					for (int column = xoff; column < xoff + 3; column++) {
-						if (board.rows[row][column].value == note) {
+						if (board.rows[row][column].getValue() == note) {
 							fillCount++;
 						}
-						if (board.rows[row][column].notes[note]) {
+						if (board.rows[row][column].getNote(note)) {
 							noteCount++;
 						}
 					}
@@ -84,7 +84,7 @@ public class EmptyRectangleSolver extends Solver {
 						for (int i = yoff; i < yoff + 3; i++) {
 							for (int j = xoff; j < xoff + 3; j++) {
 								Cell cell = board.rows[i][j];
-								if (cell.notes[note]) {
+								if (cell.getNote(note)) {
 									if (row != i && column != j) {
 										good = false;
 										break;
@@ -142,11 +142,11 @@ public class EmptyRectangleSolver extends Solver {
 		Cell[] chain = new Cell[2];
 
 		for (Cell cell : house) {
-			if (cell.getNumNotes() == 2 && cell.notes[note]) {
+			if (cell.getNumNotes() == 2 && cell.getNote(note)) {
 				if (chain[0] == null) {
 					chain[0] = cell;
 				} else if (chain[1] == null) {
-					if (chain[0].box != cell.box && chain[0].getIntNotes() == cell.getIntNotes()) {
+					if (chain[0].box != cell.box && chain[0].getNoteValue() == cell.getNoteValue()) {
 						chain[1] = cell;
 						break;
 					}

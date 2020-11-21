@@ -24,7 +24,7 @@ public class XCycleSolver extends Solver {
 			Queue<XCycle> cycles = new LinkedList<>();
 			for (Cell[] row : board.rows) {
 				for (Cell cell : row) {
-					if (cell.notes[note]) {
+					if (cell.getNote(note)) {
 						candidates.add(cell);
 						cycles.add(new XCycle(board, note, cell));
 					}

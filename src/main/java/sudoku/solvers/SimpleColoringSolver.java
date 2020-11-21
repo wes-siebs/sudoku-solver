@@ -109,7 +109,7 @@ public class SimpleColoringSolver extends Solver {
 
 					if (seesRed && seesBlue) {
 						move.addChange(new NoteChange(cell, note));
-						if (cell.notes[note]) {
+						if (cell.getNote(note)) {
 							desc += cell.coordString();
 						}
 					}
@@ -139,7 +139,7 @@ public class SimpleColoringSolver extends Solver {
 			Cell[] chain = new Cell[2];
 			boolean valid = false;
 			for (Cell cell : house) {
-				if (cell.notes[note]) {
+				if (cell.getNote(note)) {
 					if (chain[0] == null) {
 						chain[0] = cell;
 					} else if (chain[1] == null) {

@@ -36,7 +36,7 @@ public class Puzzle {
 	public boolean isSolved() {
 		for (Cell[] row : this.board.rows) {
 			for (Cell cell : row) {
-				if (cell.value == 0) {
+				if (cell.getValue() == 0) {
 					return false;
 				}
 			}

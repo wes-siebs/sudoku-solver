@@ -8,18 +8,18 @@ public class FillChange extends Change {
 	
 	public FillChange(Cell cell, int newValue) {
 		this.cell = cell;
-		this.oldValue = cell.value;
+		this.oldValue = cell.getValue();
 		this.newValue = newValue;
 	}
 
 	@Override
 	public void apply() {
-		this.cell.value = newValue;
+		this.cell.setValue(this.newValue);
 	}
 
 	@Override
 	public void unapply() {
-		this.cell.value = 0;
+		this.cell.setValue(this.oldValue);
 	}
 
 	@Override

@@ -48,14 +48,14 @@ public class XYChain extends Chain {
 					int linkNote = 0;
 					int endNote = 0;
 					for (int i = 1; i <= 9; i++) {
-						if (this.start.notes[i]) {
-							if (cell.notes[i]) {
+						if (this.start.getNote(i)) {
+							if (cell.getNote(i)) {
 								linkNote = i;
 							} else {
 								startNote = i;
 							}
 						} else {
-							if (cell.notes[i]) {
+							if (cell.getNote(i)) {
 								endNote = i;
 							}
 						}
@@ -65,10 +65,10 @@ public class XYChain extends Chain {
 						return new XYChain(this, cell, startNote, linkNote, endNote);
 					}
 				} else {
-					if (cell.notes[this.endNote] && !cell.notes[this.linkNote]) {
+					if (cell.getNote(this.endNote) && !cell.getNote(this.linkNote)) {
 						int newEnd = 0;
 						for (int note = 1; note <= 9; note++) {
-							if (cell.notes[note] && note != this.endNote) {
+							if (cell.getNote(note) && note != this.endNote) {
 								newEnd = note;
 								break;
 							}
@@ -88,7 +88,7 @@ public class XYChain extends Chain {
 			return cells;
 		} else {
 			for (Cell cell : this.candidates) {
-				if (!this.chain.contains(cell) && cell.notes[this.startNote] && this.end.canSee(cell)) {
+				if (!this.chain.contains(cell) && cell.getNote(this.startNote) && this.end.canSee(cell)) {
 					cells.add(cell);
 				}
 			}

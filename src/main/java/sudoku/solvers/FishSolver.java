@@ -25,7 +25,7 @@ public abstract class FishSolver extends Solver {
 			for (Cell[] house : houses) {
 				int count = 0;
 				for (Cell cell : house) {
-					if (cell.notes[note]) {
+					if (cell.getNote(note)) {
 						count++;
 					}
 				}
@@ -45,7 +45,7 @@ public abstract class FishSolver extends Solver {
 				for (int i = 0; i < houses.length; i++) {
 					boolean add = false;
 					for (int pos : tuple) {
-						if (candidates.get(pos)[i].notes[note]) {
+						if (candidates.get(pos)[i].getNote(note)) {
 							add = true;
 							break;
 						}

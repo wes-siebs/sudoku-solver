@@ -34,7 +34,7 @@ public abstract class NakedTupleSolver extends Solver {
 	private void checkHouse(Cell[] house, Move move, int[] tuple) {
 		boolean skip = false;
 		for (int i : tuple) {
-			if (house[i].value != 0) {
+			if (house[i].getValue() != 0) {
 				skip = true;
 				break;
 			}
@@ -79,7 +79,7 @@ public abstract class NakedTupleSolver extends Solver {
 		List<Integer> notes = new ArrayList<>();
 		for (int i = 1; i <= cells.length; i++) {
 			for (int index : indices) {
-				if (cells[index].notes[i]) {
+				if (cells[index].getNote(i)) {
 					notes.add(i);
 					break;
 				}

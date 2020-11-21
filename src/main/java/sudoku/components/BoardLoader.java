@@ -53,10 +53,10 @@ public class BoardLoader {
 						if (unit == 3 && row[j].length() > 1) {
 							adv = true;
 							cell = new Cell(0, i, j, Utilities.getBox(i, j, unit), false);
-							cell.notes[0] = true;
+							cell.setNote(0, true);
 							for (char c : row[j].toCharArray()) {
 								int note = Integer.parseInt("" + c);
-								cell.notes[note] = true;
+								cell.setNote(note, true);
 							}
 						} else {
 							int value = Integer.parseInt(row[j]);
@@ -74,19 +74,19 @@ public class BoardLoader {
 			if (adv) {
 				for (Cell[] row : rows) {
 					for (Cell cell : row) {
-						if (!cell.notes[0]) {
-							for (int i = 1; i < cell.notes.length; i++) {
-								cell.notes[i] = false;
+						if (!cell.getNote(0)) {
+							for (int i = 1; i < 10; i++) {
+								cell.setNote(i, false);
 							}
 						}
-						cell.notes[0] = false;
+						cell.setNote(0, false);
 					}
 				}
 			} else {
 				for (Cell[] row : rows) {
 					for (Cell checkedCell : row) {
 						for (Cell changedCell : row) {
-							changedCell.notes[checkedCell.value] = false;
+							changedCell.setNote(checkedCell.getValue(), false);
 						}
 					}
 				}
@@ -94,7 +94,7 @@ public class BoardLoader {
 				for (Cell[] column : columns) {
 					for (Cell checkedCell : column) {
 						for (Cell changedCell : column) {
-							changedCell.notes[checkedCell.value] = false;
+							changedCell.setNote(checkedCell.getValue(), false);
 						}
 					}
 				}
@@ -102,7 +102,7 @@ public class BoardLoader {
 				for (Cell[] box : boxes) {
 					for (Cell checkedCell : box) {
 						for (Cell changedCell : box) {
-							changedCell.notes[checkedCell.value] = false;
+							changedCell.setNote(checkedCell.getValue(), false);
 						}
 					}
 				}

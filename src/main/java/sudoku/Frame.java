@@ -82,7 +82,7 @@ public class Frame implements KeyListener {
 				int yy = y + boxPos[3 * i + note / 3];
 				for (int j = 0; j < 9; j++) {
 					int xx = x + boxPos[3 * j + note % 3];
-					if (cells[i][j].notes[note + 1]) {
+					if (cells[i][j].getNote(note + 1)) {
 						this.g.fillRect(xx, yy, boxPos[1], boxPos[1]);
 					}
 				}
@@ -104,7 +104,7 @@ public class Frame implements KeyListener {
 
 		for (Cell[] row : cells) {
 			for (Cell cell : row) {
-				if (cell.value > 0) {
+				if (cell.getValue() > 0) {
 					this.g.drawString(cell.toString(), x + 20 + boxPos[cell.column * 3], y + 20 + boxPos[cell.row * 3]);
 				}
 			}

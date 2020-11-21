@@ -38,7 +38,7 @@ public abstract class HiddenTupleSolver extends Solver {
 		for (Cell cell : house) {
 			boolean add = false;
 			for (int i = 0; i < tuple.length; i++) {
-				if (cell.notes[tuple[i]]) {
+				if (cell.getNote(tuple[i])) {
 					add = true;
 					used[i] = true;
 					break;

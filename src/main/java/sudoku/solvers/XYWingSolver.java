@@ -30,17 +30,17 @@ public class XYWingSolver extends Solver {
 		Cell[] cells = new Cell[3];
 		for (int i = 0; i < candidates.size(); i++) {
 			cells[0] = candidates.get(i);
-			if (cells[0].value != 0) {
+			if (cells[0].getValue() != 0) {
 				continue;
 			}
 			for (int j = i + 1; j < candidates.size(); j++) {
 				cells[1] = candidates.get(j);
-				if (cells[1].value != 0) {
+				if (cells[1].getValue() != 0) {
 					continue;
 				}
 				for (int k = j + 1; k < candidates.size(); k++) {
 					cells[2] = candidates.get(k);
-					if (cells[2].value != 0) {
+					if (cells[2].getValue() != 0) {
 						continue;
 					}
 					int index = this.checkTriple(cells);
@@ -48,7 +48,7 @@ public class XYWingSolver extends Solver {
 						Cell key = cells[index];
 						Cell p1 = cells[(index + 1) % 3];
 						Cell p2 = cells[(index + 2) % 3];
-						int toRemove = (p1.getIntNotes() | p2.getIntNotes()) ^ key.getIntNotes();
+						int toRemove = (p1.getNoteValue() | p2.getNoteValue()) ^ key.getNoteValue();
 						toRemove = Utilities.unfold(toRemove);
 
 						for (Cell[] row : board.rows) {
@@ -62,7 +62,7 @@ public class XYWingSolver extends Solver {
 						if (!move.isEmpty()) {
 							String desc = this.getName() + " on ";
 							for (int note = 1; note <= 9; note++) {
-								if (key.notes[note] || note == toRemove) {
+								if (key.getNote(note) || note == toRemove) {
 									desc += note;
 								}
 							}
@@ -82,7 +82,7 @@ public class XYWingSolver extends Solver {
 		Cell c2 = cells[1];
 		Cell c3 = cells[2];
 		
-		if ((c1.getIntNotes() ^ c2.getIntNotes()) == c3.getIntNotes()) {
+		if ((c1.getNoteValue() ^ c2.getNoteValue()) == c3.getNoteValue()) {
 			
 			int count = 0;
 			count += c1.canSee(c2) ? 1 : 0;
