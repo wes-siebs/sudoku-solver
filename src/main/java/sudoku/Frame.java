@@ -14,6 +14,8 @@ import javax.swing.JFrame;
 import main.java.sudoku.components.Board;
 import main.java.sudoku.components.Cell;
 import main.java.sudoku.components.Puzzle;
+import main.java.sudoku.variants.ModBoard;
+import main.java.sudoku.variants.ModDrawer;
 
 public class Frame implements KeyListener {
 
@@ -25,10 +27,11 @@ public class Frame implements KeyListener {
 	private boolean[] show;
 	private boolean showAll;
 
-	private static final int WIDTH = 600;
-	private static final int HEIGHT = 800;
-	private static final int OFFSET_X = 8;
-	private static final int OFFSET_Y = 31;
+	public static final int WIDTH = 600;
+	public static final int HEIGHT = 800;
+	public static final int MARGIN = 20;
+	public static final int OFFSET_X = 8;
+	public static final int OFFSET_Y = 31;
 
 	public Frame(Puzzle puzzle) {
 		this.puzzle = puzzle;
@@ -60,14 +63,14 @@ public class Frame implements KeyListener {
 		this.g.setColor(Color.WHITE);
 		this.g.fillRect(0, 0, WIDTH, HEIGHT);
 
-		this.drawPuzzle(20, 20, WIDTH - 40, board);
-		this.drawGraph(20, WIDTH, WIDTH - 40, HEIGHT - WIDTH - 20, this.puzzle.getChart());
+		this.drawPuzzle(MARGIN, MARGIN, WIDTH - (MARGIN << 1), board);
+		this.drawGraph(MARGIN, WIDTH, WIDTH - (MARGIN << 1), HEIGHT - WIDTH - MARGIN, this.puzzle.getChart());
 
 		this.frame.getGraphics().drawImage(this.img, OFFSET_X, OFFSET_Y, null);
 	}
 
 	private void drawPuzzle(int x, int y, int size, Board board) {
-		int[] boxPos = new int[27];
+		int[] boxPos = new int[28];
 		for (int i = 0; i < boxPos.length; i++) {
 			boxPos[i] = i * size / 27;
 		}
@@ -109,6 +112,10 @@ public class Frame implements KeyListener {
 				}
 			}
 		}
+		
+		if (board instanceof ModBoard) {
+			ModDrawer.draw(board, this.g, boxPos);
+		}
 	}
 
 	private void drawGraph(int x, int y, int width, int height, int[] vals) {
@@ -133,6 +140,8 @@ public class Frame implements KeyListener {
 		this.g.setColor(Color.BLACK);
 		this.g.setStroke(new BasicStroke(3));
 		this.g.drawRect(x, y, width, height);
+		
+		this.g.drawString(this.puzzle.getNote(), x, y - 3);
 	}
 
 	private int[] adjust(int[] vals, int height) {

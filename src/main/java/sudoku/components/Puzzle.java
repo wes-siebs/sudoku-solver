@@ -123,6 +123,13 @@ public class Puzzle {
 		return vals;
 	}
 	
+	public String getNote() {
+		if (this.redoMoves.size() > 0) {
+			return this.redoMoves.get(this.redoMoves.size() - 1).description;
+		}
+		return "";
+	}
+	
 	public double getProgress() {
 		if (this.moves.size() == this.undoMoves.size()) {
 			return 1;

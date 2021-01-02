@@ -9,6 +9,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import main.java.sudoku.Utilities;
+import main.java.sudoku.variants.ModBoard;
+import main.java.sudoku.variants.ModCircle;
 
 public class BoardLoader {
 
@@ -108,9 +110,45 @@ public class BoardLoader {
 				}
 			}
 
+			Board board;
+
+			line = reader.readLine();
+			if (line != null && line.equals("Modulus Variant")) {
+				ModBoard modBoard = new ModBoard(rows, columns, boxes);
+				for (int i = 0; i < 17; i++) {
+					if (i % 2 == 0) {
+						String inRow = reader.readLine();
+						int col = 0;
+						for (char c : inRow.toCharArray()) {
+							int val = c - '0';
+
+							if (val > 1) {
+								modBoard.modCircles.add(new ModCircle(rows[i / 2][col], rows[i / 2][col + 1], val));
+							}
+
+							col++;
+						}
+					} else {
+						int col = 0;
+						String inCol = reader.readLine();
+						for (char c : inCol.toCharArray()) {
+							int val = c - '0';
+
+							if (val > 1) {
+								modBoard.modCircles.add(new ModCircle(rows[i / 2][col], rows[i / 2 + 1][col], val));
+							}
+
+							col++;
+						}
+					}
+				}
+				board = modBoard;
+			} else {
+				board = new Board(rows, columns, boxes);
+			}
+
 			reader.close();
 
-			Board board = new Board(rows, columns, boxes);
 			return board;
 		} catch (NullPointerException exception) {
 			System.err.println("Filename cannot be null");
