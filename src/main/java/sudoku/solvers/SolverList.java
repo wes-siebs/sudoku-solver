@@ -1,6 +1,7 @@
 package main.java.sudoku.solvers;
 
-import main.java.sudoku.variants.ModCircleSolver;
+import main.java.sudoku.variants.modulus.ModCircleChainSolver;
+import main.java.sudoku.variants.modulus.ModCircleSolver;
 
 public class SolverList {
 	
@@ -26,7 +27,8 @@ public class SolverList {
 			new XYChainSolver(),
 			new XYWingSolver(),
 			new XYZWingSolver(),
-			new ModCircleSolver()
+			new ModCircleSolver(),
+			new ModCircleChainSolver()
 	};
 	
 	public final Solver[] solvers;

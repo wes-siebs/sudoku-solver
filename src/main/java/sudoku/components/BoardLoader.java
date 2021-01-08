@@ -9,8 +9,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import main.java.sudoku.Utilities;
-import main.java.sudoku.variants.ModBoard;
-import main.java.sudoku.variants.ModCircle;
+import main.java.sudoku.variants.modulus.ModBoard;
+import main.java.sudoku.variants.modulus.ModCircle;
 
 public class BoardLoader {
 
@@ -39,7 +39,7 @@ public class BoardLoader {
 			boolean adv = false;
 
 			for (int i = 0; i < size; i++) {
-				String[] row = reader.readLine().split(" ");
+				String[] row = reader.readLine().replace('_', '0').split(" ");
 
 				if (row.length == 1) {
 					for (int j = 0; j < size; j++) {
@@ -117,7 +117,7 @@ public class BoardLoader {
 				ModBoard modBoard = new ModBoard(rows, columns, boxes);
 				for (int i = 0; i < 17; i++) {
 					if (i % 2 == 0) {
-						String inRow = reader.readLine();
+						String inRow = reader.readLine().replaceAll(" ", "");
 						int col = 0;
 						for (char c : inRow.toCharArray()) {
 							int val = c - '0';
@@ -130,7 +130,7 @@ public class BoardLoader {
 						}
 					} else {
 						int col = 0;
-						String inCol = reader.readLine();
+						String inCol = reader.readLine().replaceAll(" ", "");
 						for (char c : inCol.toCharArray()) {
 							int val = c - '0';
 

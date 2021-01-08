@@ -1,4 +1,4 @@
-package main.java.sudoku.variants;
+package main.java.sudoku.variants.modulus;
 
 import java.util.ArrayList;
 import java.util.List;

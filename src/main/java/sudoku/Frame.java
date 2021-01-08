@@ -2,30 +2,25 @@ package main.java.sudoku;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
 import main.java.sudoku.components.Board;
 import main.java.sudoku.components.Cell;
-import main.java.sudoku.components.Puzzle;
-import main.java.sudoku.variants.ModBoard;
-import main.java.sudoku.variants.ModDrawer;
+import main.java.sudoku.variants.modulus.ModBoard;
+import main.java.sudoku.variants.modulus.ModDrawer;
 
-public class Frame implements KeyListener {
-
-	private Puzzle puzzle;
-
-	private JFrame frame;
+public class Frame {
+	
+	public JFrame frame;
 	private Image img;
 	private Graphics2D g;
-	private boolean[] show;
-	private boolean showAll;
+	boolean[] show;
 
 	public static final int WIDTH = 600;
 	public static final int HEIGHT = 800;
@@ -33,14 +28,7 @@ public class Frame implements KeyListener {
 	public static final int OFFSET_X = 8;
 	public static final int OFFSET_Y = 31;
 
-	public Frame(Puzzle puzzle) {
-		this.puzzle = puzzle;
-		this.show = new boolean[9];
-		for (int i = 0; i < this.show.length; i++) {
-			this.show[i] = true;
-		}
-		this.showAll = false;
-
+	public Frame() {
 		this.frame = new JFrame("Sudoku Solver");
 
 		this.frame.setSize(WIDTH + OFFSET_X * 2, HEIGHT + OFFSET_Y + OFFSET_X);
@@ -52,19 +40,22 @@ public class Frame implements KeyListener {
 		this.g = (Graphics2D) this.img.getGraphics();
 		RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		this.g.addRenderingHints(rh);
-		
-
-		this.frame.addKeyListener(this);
 
 		this.frame.setVisible(true);
 	}
 
-	public void draw(Board board) {
+	public void draw(Board board, int[] chart, double progress, String note) {
 		this.g.setColor(Color.WHITE);
 		this.g.fillRect(0, 0, WIDTH, HEIGHT);
 
-		this.drawPuzzle(MARGIN, MARGIN, WIDTH - (MARGIN << 1), board);
-		this.drawGraph(MARGIN, WIDTH, WIDTH - (MARGIN << 1), HEIGHT - WIDTH - MARGIN, this.puzzle.getChart());
+		int x = MARGIN;
+		int py = MARGIN;
+		int gy = WIDTH;
+		int w = WIDTH - (MARGIN << 1);
+		int h = HEIGHT - WIDTH - MARGIN;
+		
+		this.drawPuzzle(x, py, w, board);
+		this.drawGraph(x, gy, w, h, chart, progress, note);
 
 		this.frame.getGraphics().drawImage(this.img, OFFSET_X, OFFSET_Y, null);
 	}
@@ -105,20 +96,22 @@ public class Frame implements KeyListener {
 			this.g.drawLine(x + boxPos[i * 3], y, x + boxPos[i * 3], y + size);
 		}
 
+		this.g.setFont(new Font(this.g.getFont().getName(), Font.PLAIN, 25));
 		for (Cell[] row : cells) {
 			for (Cell cell : row) {
 				if (cell.getValue() > 0) {
-					this.g.drawString(cell.toString(), x + 20 + boxPos[cell.column * 3], y + 20 + boxPos[cell.row * 3]);
+					this.g.drawString(cell.toString(), x + 25 + boxPos[cell.column * 3], y + 40 + boxPos[cell.row * 3]);
 				}
 			}
 		}
+		this.g.setFont(new Font(this.g.getFont().getName(), Font.PLAIN, 12));
 		
 		if (board instanceof ModBoard) {
 			ModDrawer.draw(board, this.g, boxPos);
 		}
 	}
 
-	private void drawGraph(int x, int y, int width, int height, int[] vals) {
+	private void drawGraph(int x, int y, int width, int height, int[] vals, double progress, String note) {
 		this.g.setColor(Color.BLACK);
 		this.g.setStroke(new BasicStroke(1));
 		int[] adjusted = adjust(vals, height);
@@ -131,7 +124,6 @@ public class Frame implements KeyListener {
 			this.g.drawLine(x1, y1, x2, y2);
 		}
 
-		double progress = this.puzzle.getProgress();
 		if (progress < 1) {
 			this.g.setColor(new Color(0, 255, 0, 100));
 			this.g.fillRect((int) (x + (progress * width)), y, width / vals.length, height);
@@ -141,7 +133,7 @@ public class Frame implements KeyListener {
 		this.g.setStroke(new BasicStroke(3));
 		this.g.drawRect(x, y, width, height);
 		
-		this.g.drawString(this.puzzle.getNote(), x, y - 3);
+		this.g.drawString(note, x, y - 3);
 	}
 
 	private int[] adjust(int[] vals, int height) {
@@ -158,33 +150,4 @@ public class Frame implements KeyListener {
 		}
 		return adjusted;
 	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		int code = e.getKeyCode();
-		if (code == KeyEvent.VK_SPACE) {
-			this.puzzle.solve();
-		} else if (code == KeyEvent.VK_RIGHT) {
-			this.puzzle.redo();
-		} else if (code == KeyEvent.VK_LEFT) {
-			this.puzzle.undo();
-		} else if (code == KeyEvent.VK_0) {
-			for (int i = 0; i < this.show.length; i++) {
-				this.show[i] = this.showAll;
-			}
-			this.showAll = !this.showAll;
-		} else if (code > KeyEvent.VK_0 && code <= KeyEvent.VK_9) {
-			int index = code - KeyEvent.VK_1;
-			this.show[index] = !this.show[index];
-		}
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-	}
-
 }

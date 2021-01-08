@@ -1,4 +1,4 @@
-package main.java.sudoku.variants;
+package main.java.sudoku.variants.modulus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +75,7 @@ public class ModCircleSolver extends Solver {
 
 	@Override
 	public int getDifficulty() {
-		return 3;
+		return -1;
 	}
 
 }
