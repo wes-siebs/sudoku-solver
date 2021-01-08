@@ -10,30 +10,27 @@ public class Listener implements KeyListener {
 
 	private Puzzle puzzle;
 	private Frame frame;
-	
+
 	private boolean shift;
 	private boolean control;
 	public boolean showAll;
-	
+
 	public Listener(Puzzle puzzle, Frame frame) {
 		this.puzzle = puzzle;
 		this.frame = frame;
 		this.frame.frame.addKeyListener(this);
-		
+
 		for (int i = 0; i < Settings.show.length; i++) {
 			Settings.show[i] = true;
 		}
 		this.showAll = false;
 	}
-	
+
 	public void refresh() {
-		this.frame.draw(
-				this.puzzle.getBoard(), 
-				this.puzzle.getChart(), 
-				this.puzzle.getProgress(), 
+		this.frame.draw(this.puzzle.getBoard(), this.puzzle.getChart(), this.puzzle.getProgress(),
 				this.puzzle.getNote());
 	}
-	
+
 	@Override
 	public void keyTyped(KeyEvent e) {
 		this.refresh();
@@ -86,7 +83,7 @@ public class Listener implements KeyListener {
 		} else if (code == KeyEvent.VK_CONTROL) {
 			this.control = true;
 		}
-		
+
 		this.refresh();
 	}
 
@@ -98,7 +95,7 @@ public class Listener implements KeyListener {
 		} else if (code == KeyEvent.VK_CONTROL) {
 			this.control = false;
 		}
-		
+
 		this.refresh();
 	}
 }

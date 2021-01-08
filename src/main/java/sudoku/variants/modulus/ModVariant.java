@@ -1,12 +1,12 @@
 package main.java.sudoku.variants.modulus;
 
 import main.java.sudoku.components.Board;
-import main.java.sudoku.components.Drawer;
 import main.java.sudoku.solvers.Solver;
 import main.java.sudoku.variants.Variant;
+import main.java.sudoku.variants.VariantDrawer;
 
 public class ModVariant implements Variant {
-	
+
 	private final Solver[] solvers = { new ModCircleSolver(), new ModCircleChainSolver() };
 
 	@Override
@@ -20,7 +20,7 @@ public class ModVariant implements Variant {
 	}
 
 	@Override
-	public Drawer getDrawer() {
+	public VariantDrawer getDrawer() {
 		return new ModDrawer();
 	}
 

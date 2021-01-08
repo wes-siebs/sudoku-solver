@@ -74,7 +74,7 @@ public class Puzzle {
 				}
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -207,12 +207,12 @@ public class Puzzle {
 		this.undoMoves.clear();
 		this.redoMoves.clear();
 		this.moves.clear();
-		
+
 		if (numCircles != -1) {
-			ModBoard modBoard = (ModBoard)this.board;
+			ModBoard modBoard = (ModBoard) this.board;
 			modBoard.modCircles.clear();
-			
-			while(modBoard.modCircles.size() < numCircles) {
+
+			while (modBoard.modCircles.size() < numCircles) {
 				ModCircle circle;
 				int v1 = (int) (Math.random() * 8);
 				int v2 = (int) (Math.random() * 9);

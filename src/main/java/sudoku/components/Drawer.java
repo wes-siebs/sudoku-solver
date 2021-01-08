@@ -2,37 +2,36 @@ package main.java.sudoku.components;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.List;
 
-import main.java.sudoku.variants.modulus.ModBoard;
-import main.java.sudoku.variants.modulus.ModDrawer;
+import main.java.sudoku.variants.VariantDrawer;
 
 public class Drawer {
 
-	protected final int boxPos[];
-	private int fontSize = 0;
+	private List<VariantDrawer> variantDrawers;
 
 	public Drawer() {
-		this.boxPos = new int[28];
+		this.variantDrawers = new ArrayList<>();
+
+		Settings.boxPos = new int[28];
+		int[] boxPos = Settings.boxPos;
 		for (int i = 0; i < boxPos.length; i++) {
 			boxPos[i] = i * Settings.w / 27;
 		}
 	}
 
-	protected void setFontSize(int fontSize) {
-		if (this.fontSize != fontSize) {
-			Graphics2D g = Settings.g;
-			g.setFont(new Font(g.getFont().getName(), Font.PLAIN, fontSize));
-			this.fontSize = fontSize;
-		}
+	public void addVariant(VariantDrawer variantDrawer) {
+		this.variantDrawers.add(variantDrawer);
 	}
 
-	protected void drawFrame() {
+	private void drawFrame() {
 		Graphics2D g = Settings.g;
 		int x = Settings.x;
 		int y = Settings.py;
 		int size = Settings.w;
+		int[] boxPos = Settings.boxPos;
 
 		g.setColor(Color.BLACK);
 		g.setStroke(new BasicStroke(3));
@@ -48,10 +47,11 @@ public class Drawer {
 		}
 	}
 
-	protected void drawNotes() {
+	private void drawNotes() {
 		Graphics2D g = Settings.g;
 		int x = Settings.x;
 		int y = Settings.py;
+		int[] boxPos = Settings.boxPos;
 
 		g.setColor(Color.LIGHT_GRAY);
 		for (int note = 0; note < 9; note++) {
@@ -70,12 +70,13 @@ public class Drawer {
 		}
 	}
 
-	protected void drawValues() {
+	private void drawValues() {
 		Graphics2D g = Settings.g;
 		int x = Settings.x;
 		int y = Settings.py;
+		int[] boxPos = Settings.boxPos;
 
-		setFontSize(25);
+		Settings.setFontSize(25);
 		g.setColor(Color.BLACK);
 		for (Cell[] row : Settings.cells) {
 			for (Cell cell : row) {
@@ -89,11 +90,19 @@ public class Drawer {
 	public void drawPuzzle(Board board) {
 		drawNotes();
 		drawValues();
-		drawFrame();
 
-		setFontSize(12);
-		if (board instanceof ModBoard) {
-			ModDrawer.draw(board, Settings.g, boxPos);
+		for (VariantDrawer drawer : variantDrawers) {
+			if (!drawer.overFrame()) {
+				drawer.drawVariant(board);
+			}
+		}
+
+		drawFrame();
+		
+		for (VariantDrawer drawer : variantDrawers) {
+			if (drawer.overFrame()) {
+				drawer.drawVariant(board);
+			}
 		}
 	}
 

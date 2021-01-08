@@ -18,14 +18,12 @@ public class Frame {
 	private Image img;
 	private Drawer drawer;
 
-	
-
 	public Frame(Drawer drawer) {
 		int WIDTH = Settings.WIDTH;
 		int HEIGHT = Settings.HEIGHT;
 		int OFFSET_X = Settings.OFFSET_X;
 		int OFFSET_Y = Settings.OFFSET_Y;
-		
+
 		this.drawer = drawer;
 
 		this.frame = new JFrame("Sudoku Solver");
@@ -51,7 +49,7 @@ public class Frame {
 		int HEIGHT = Settings.HEIGHT;
 		int OFFSET_X = Settings.OFFSET_X;
 		int OFFSET_Y = Settings.OFFSET_Y;
-		
+
 		Settings.g.setColor(Color.WHITE);
 		Settings.g.fillRect(0, 0, WIDTH, HEIGHT);
 

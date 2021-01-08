@@ -1,5 +1,6 @@
 package main.java.sudoku.components;
 
+import java.awt.Font;
 import java.awt.Graphics2D;
 
 public class Settings {
@@ -18,5 +19,16 @@ public class Settings {
 	public static int w = WIDTH - (MARGIN << 1);
 	public static int h = HEIGHT - WIDTH - MARGIN;
 	public static Cell[][] cells;
+	public static int boxPos[];
+	
+	private static int fontSize = 0;
+	
+	public static void setFontSize(int fontSize) {
+		if (Settings.fontSize != fontSize) {
+			Graphics2D g = Settings.g;
+			g.setFont(new Font(g.getFont().getName(), Font.PLAIN, fontSize));
+			Settings.fontSize = fontSize;
+		}
+	}
 
 }
