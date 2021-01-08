@@ -7,10 +7,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import main.java.sudoku.Utilities;
-import main.java.sudoku.variants.modulus.ModBoard;
-import main.java.sudoku.variants.modulus.ModCircle;
+import main.java.sudoku.variants.Variant;
 
 public class BoardLoader {
 
@@ -110,41 +111,33 @@ public class BoardLoader {
 				}
 			}
 
-			Board board;
+			Board board = new Board(rows, columns, boxes);
 
-			line = reader.readLine();
-			if (line != null && line.equals("Modulus Variant")) {
-				ModBoard modBoard = new ModBoard(rows, columns, boxes);
-				for (int i = 0; i < 17; i++) {
-					if (i % 2 == 0) {
-						String inRow = reader.readLine().replaceAll(" ", "");
-						int col = 0;
-						for (char c : inRow.toCharArray()) {
-							int val = c - '0';
+			while ((line = reader.readLine()) != null) {
+				boolean read = false;
+				for (Variant variant : Variant.variantList) {
+					if (variant.getName().equals(line)) {
+						read = true;
+						variant.loadSolvers();
 
-							if (val > 1) {
-								modBoard.modCircles.add(new ModCircle(rows[i / 2][col], rows[i / 2][col + 1], val));
+						List<String> lines = new ArrayList<>();
+						while ((line = reader.readLine()) != null) {
+							if (line.equals("end")) {
+								break;
+							} else {
+								lines.add(line);
 							}
-
-							col++;
 						}
-					} else {
-						int col = 0;
-						String inCol = reader.readLine().replaceAll(" ", "");
-						for (char c : inCol.toCharArray()) {
-							int val = c - '0';
 
-							if (val > 1) {
-								modBoard.modCircles.add(new ModCircle(rows[i / 2][col], rows[i / 2 + 1][col], val));
-							}
-
-							col++;
-						}
+						board = variant.loadBoard(board, lines);
+						break;
 					}
 				}
-				board = modBoard;
-			} else {
-				board = new Board(rows, columns, boxes);
+
+				if (!read) {
+					System.out.println("Unrecognized variant: " + line);
+					break;
+				}
 			}
 
 			reader.close();

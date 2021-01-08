@@ -1,16 +1,29 @@
 package main.java.sudoku.variants;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import main.java.sudoku.components.Board;
 import main.java.sudoku.solvers.Solver;
+import main.java.sudoku.solvers.SolverList;
+import main.java.sudoku.variants.modulus.ModVariant;
 
-public interface Variant {
+public abstract class Variant {
 
-	public String getName();
+	protected List<Solver> solvers = new ArrayList<>();
 
-	public Solver[] getSolvers();
+	public static final Variant[] variantList = {
+			new ModVariant()
+	};
 
-	public VariantDrawer getDrawer();
+	public void loadSolvers() {
+		SolverList.addVariantSolvers(solvers);
+	}
 
-	public Board loadBoard();
+	public abstract String getName();
+
+	public abstract VariantDrawer getDrawer();
+
+	public abstract Board loadBoard(Board board, List<String> lines);
 
 }

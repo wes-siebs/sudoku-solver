@@ -5,25 +5,24 @@ import java.util.List;
 import java.util.Stack;
 
 import main.java.sudoku.solvers.Solver;
+import main.java.sudoku.solvers.SolverList;
 import main.java.sudoku.variants.modulus.ModBoard;
 import main.java.sudoku.variants.modulus.ModCircle;
 
 public class Puzzle {
 
 	private Board board;
-	private Solver[] solvers;
 	private Stack<Move> undoMoves;
 	private Stack<Move> redoMoves;
 	private List<Move> moves;
 	private int difficulty;
 
-	public Puzzle(String filename, Solver[] solvers) {
-		this(BoardLoader.loadBoard(filename), solvers);
+	public Puzzle(String filename) {
+		this(BoardLoader.loadBoard(filename));
 	}
 
-	public Puzzle(Board board, Solver[] solvers) {
+	public Puzzle(Board board) {
 		this.board = board;
-		this.solvers = solvers;
 
 		this.undoMoves = new Stack<Move>();
 		this.redoMoves = new Stack<Move>();
@@ -130,7 +129,8 @@ public class Puzzle {
 	}
 
 	public Move takeStep() {
-		for (Solver solver : this.solvers) {
+		Solver[] solvers = SolverList.getInstance().solvers;
+		for (Solver solver : solvers) {
 			Move nextMove = solver.getNextMove(this.board);
 
 			if (!nextMove.isEmpty()) {
