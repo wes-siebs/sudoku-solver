@@ -1,16 +1,17 @@
 package main.java.sudoku.variants.modulus;
 
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.List;
 
-import main.java.sudoku.Frame;
 import main.java.sudoku.components.Board;
 import main.java.sudoku.components.Cell;
+import main.java.sudoku.components.Drawer;
+import main.java.sudoku.components.Settings;
 
-public class ModDrawer {
-	
-	public static void draw(Board board, Graphics g, int[] pos) {
+public class ModDrawer extends Drawer {
+
+	public static void draw(Board board, Graphics2D g, int[] pos) {
 		ModBoard modBoard = (ModBoard) board;
 		List<ModCircle> circles = modBoard.modCircles;
 		
@@ -19,12 +20,12 @@ public class ModDrawer {
 		}
 	}
 	
-	public static void draw(ModCircle circle, Graphics g, int[] pos) {
+	public static void draw(ModCircle circle, Graphics2D g, int[] pos) {
 		Cell c1 = circle.c1;
 		Cell c2 = circle.c2;
 		
-		int x = Frame.MARGIN - (pos[1] >> 1);
-		int y = Frame.MARGIN - (pos[1] >> 1);
+		int x = Settings.MARGIN - (pos[1] >> 1);
+		int y = Settings.MARGIN - (pos[1] >> 1);
 		
 		if (c1.row == c2.row) {
 			x += pos[3 * c2.column];

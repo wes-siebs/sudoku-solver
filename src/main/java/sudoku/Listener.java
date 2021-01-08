@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import main.java.sudoku.components.Puzzle;
+import main.java.sudoku.components.Settings;
 
 public class Listener implements KeyListener {
 
@@ -19,9 +20,8 @@ public class Listener implements KeyListener {
 		this.frame = frame;
 		this.frame.frame.addKeyListener(this);
 		
-		this.frame.show = new boolean[9];
-		for (int i = 0; i < this.frame.show.length; i++) {
-			this.frame.show[i] = true;
+		for (int i = 0; i < Settings.show.length; i++) {
+			Settings.show[i] = true;
 		}
 		this.showAll = false;
 	}
@@ -49,13 +49,13 @@ public class Listener implements KeyListener {
 		} else if (code == KeyEvent.VK_LEFT) {
 			this.puzzle.undo();
 		} else if (code == KeyEvent.VK_0) {
-			for (int i = 0; i < this.frame.show.length; i++) {
-				this.frame.show[i] = this.showAll;
+			for (int i = 0; i < Settings.show.length; i++) {
+				Settings.show[i] = this.showAll;
 			}
 			this.showAll = !this.showAll;
 		} else if (code > KeyEvent.VK_0 && code <= KeyEvent.VK_9) {
 			int index = code - KeyEvent.VK_1;
-			this.frame.show[index] = !this.frame.show[index];
+			Settings.show[index] = !Settings.show[index];
 		} else if (code == KeyEvent.VK_R) {
 			if (this.shift) {
 				if (this.control) {
