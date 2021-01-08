@@ -106,11 +106,6 @@ public class WXYZWingSolver extends Solver {
 
 		}
 	}
-
-	private Cell[] checkHouse(Cell[] house, int[] tuple) {
-		Cell[] cells = new Cell[3];
-		return cells;
-	}
 	
 	private boolean areValid(Cell[] cells, int value) {
 		int cellValue = 0;
